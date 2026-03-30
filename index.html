@@ -201,7 +201,7 @@ let activeStatus='all', activeTags=new Set();
 
 async function loadData(){
   try{
-    const r=await fetch('projects.json');
+    const r=await fetch('projects.json?v='+Date.now());
     const d=await r.json();
     PROJECTS=d.projects||[];
   }catch(e){
