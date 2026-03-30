@@ -196,7 +196,7 @@ let PASS='', PROJECTS=[], storedVerify='', storedData=null, isFirstTime=false;
 
 async function boot(){
   try{
-    const r=await fetch('projects.json');
+    const r=await fetch('projects.json?v='+Date.now());
     storedData=await r.json();
     storedVerify=storedData._verify||'';
     isFirstTime=!storedVerify;
