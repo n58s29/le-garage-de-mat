@@ -69,8 +69,9 @@ header{padding:44px 0 32px;display:flex;justify-content:space-between;align-item
 /* ========== CARD ========== */
 .card{background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:border-color .2s,transform .2s}
 .card:hover{border-color:var(--bd2);transform:translateY(-2px)}
-.card-vis{height:100px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.card-vis{height:140px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .card-vis .ico{font-size:30px;position:relative;z-index:1}
+.card-vis img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .card-body{padding:12px 14px 14px}
 .card-top{display:flex;justify-content:space-between;align-items:start;gap:8px;margin-bottom:3px}
 .card-title{font-family:var(--font-d);font-size:13px;font-weight:700;letter-spacing:-.2px}
@@ -100,8 +101,9 @@ header{padding:44px 0 32px;display:flex;justify-content:space-between;align-item
 .modal{background:var(--bg-card);border:1px solid var(--bd);border-radius:12px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;position:relative}
 .modal-close{position:absolute;top:12px;right:14px;width:32px;height:32px;border-radius:50%;border:1px solid var(--bd);background:var(--bg-card);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--tx2);z-index:1}
 .modal-close:hover{border-color:var(--bd2);color:var(--tx)}
-.modal-vis{height:140px;display:flex;align-items:center;justify-content:center;border-radius:12px 12px 0 0;overflow:hidden;position:relative}
+.modal-vis{height:240px;display:flex;align-items:center;justify-content:center;border-radius:12px 12px 0 0;overflow:hidden;position:relative}
 .modal-vis .ico{font-size:48px;position:relative;z-index:1}
+.modal-vis img{width:100%;height:100%;object-fit:cover;object-position:top;position:absolute;inset:0}
 .modal-body{padding:24px}
 .modal-title{font-family:var(--font-d);font-size:20px;font-weight:700;margin-bottom:4px}
 .modal-status{margin-bottom:16px}
@@ -168,7 +170,7 @@ footer a{color:var(--tx2)}
 <div class="modal-bg" id="modal-bg">
   <div class="modal" id="modal">
     <button class="modal-close" id="modal-close">&times;</button>
-    <div class="modal-vis" id="m-vis"><span class="ico" id="m-ico"></span></div>
+    <div class="modal-vis" id="m-vis"></div>
     <div class="modal-body">
       <div class="modal-title" id="m-title"></div>
       <div class="modal-status" id="m-status"></div>
@@ -257,8 +259,8 @@ function render(){
   grid.innerHTML=list.map((p,i)=>{
     const sm=STATUS_MAP[p.status]||{l:'?',c:''};
     return `<div class="card" style="animation:fadeUp .3s ease both;animation-delay:${i*35}ms" data-id="${esc(p.id)}">
-      <div class="card-vis" style="background:${esc(p.screenshot?'var(--bg-el)':'#'+hashColor(p.title))}">
-        <span class="ico">${esc(p.icon)}</span>
+      <div class="card-vis" style="background:${ p.screenshot ? 'var(--bg-el)' : '#'+hashColor(p.title) }">
+        ${ p.screenshot ? `<img src="${esc(p.screenshot)}" alt="${esc(p.title)}" loading="lazy">` : `<span class="ico">${esc(p.icon)}</span>` }
       </div>
       <div class="card-body">
         <div class="card-top">
@@ -292,8 +294,13 @@ function hashColor(s){let h=0;for(let i=0;i<s.length;i++)h=s.charCodeAt(i)+((h<<
 const modalBg=document.getElementById('modal-bg');
 function openModal(p){
   const sm=STATUS_MAP[p.status]||{l:'?',c:''};
-  document.getElementById('m-vis').style.background='#'+hashColor(p.title);
-  document.getElementById('m-ico').textContent=p.icon;
+  const vis=document.getElementById('m-vis');
+  vis.style.background='#'+hashColor(p.title);
+  if(p.screenshot){
+    vis.innerHTML=`<img src="${esc(p.screenshot)}" alt="${esc(p.title)}">`;
+  }else{
+    vis.innerHTML=`<span class="ico">${esc(p.icon)}</span>`;
+  }
   document.getElementById('m-title').textContent=p.title;
   document.getElementById('m-status').innerHTML=`<span class="st ${sm.c}">${esc(sm.l)}</span>`;
   document.getElementById('m-desc').textContent=p.desc;
