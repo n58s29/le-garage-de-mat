@@ -1,7 +1,21 @@
 {
   "_verify": "b7141902da7651c09ea78408adaf519de968d3be077c29bbe67c836dadf9a518",
-  "_signature": "5e846a6a6ce80cbfcf2604fbd69bf7058f536bbb6c5e18a875543c9a17b439eb",
+  "_signature": "23e46648f19bca21a1411f50e52f1e791a02e79b6e6c828f737b1c4e5205f01a",
   "projects": [
+    {
+      "id": "test-mnczok7s",
+      "title": "TEST",
+      "icon": "📦",
+      "desc": "TEST",
+      "context": "TEST",
+      "status": "reflexion",
+      "tags": [
+        "GenAI"
+      ],
+      "date": "",
+      "github": "",
+      "screenshot": ""
+    },
     {
       "id": "cadrage-express",
       "title": "CadrageExpress",
@@ -50,7 +64,7 @@
       ],
       "date": "2025–2026",
       "github": "",
-      "screenshot": ""
+      "screenshot": "https://github.com/n58s29/le-garage-de-mat/blob/main/screenshots/sorunning_challengeconnecte.jpg"
     },
     {
       "id": "motorinno",
