@@ -1,6 +1,6 @@
 {
-  "_verify": "",
-  "_signature": "",
+  "_verify": "b7141902da7651c09ea78408adaf519de968d3be077c29bbe67c836dadf9a518",
+  "_signature": "5e846a6a6ce80cbfcf2604fbd69bf7058f536bbb6c5e18a875543c9a17b439eb",
   "projects": [
     {
       "id": "cadrage-express",
@@ -9,7 +9,11 @@
       "desc": "Outil de cadrage projet avec synthèse structurée + mockup visuel via appels API parallèles. Version 6.",
       "context": "Besoin de cadrer rapidement des projets d'innovation sans passer par des templates PowerPoint interminables. Un HTA qui appelle le GPT interne SNCF pour générer synthèse et maquette en parallèle.",
       "status": "prod",
-      "tags": ["GenAI", "HTA", "Prompt Engineering"],
+      "tags": [
+        "GenAI",
+        "HTA",
+        "Prompt Engineering"
+      ],
       "date": "2024–2025",
       "github": "",
       "screenshot": ""
@@ -21,7 +25,12 @@
       "desc": "Pré-screening éthique IA aligné EU AI Act. Classification des risques, formulaire de feedback.",
       "context": "Déployé auprès des correspondants éthique Groupe SNCF pour pré-évaluer les projets IA avant passage en comité. Aligné sur la classification des risques EU AI Act.",
       "status": "prod",
-      "tags": ["GenAI", "HTA", "Éthique", "EU AI Act"],
+      "tags": [
+        "GenAI",
+        "HTA",
+        "Éthique",
+        "EU AI Act"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -33,7 +42,12 @@
       "desc": "Écosystème participant complet : générateur dossards, gestion résultats CSV, classements, tirage au sort, compteur live.",
       "context": "Événement annuel SoRunning SNCF (thème 2026 : La Vie en Rose). Besoin d'un outillage complet de gestion sans budget : dossards PNG, résultats croisés par numéro, classements par catégorie, tirage au sort pour les marches, compteur live via Power Automate + SharePoint.",
       "status": "mvp",
-      "tags": ["Running", "HTML/JS", "SharePoint", "Power Automate"],
+      "tags": [
+        "Running",
+        "HTML/JS",
+        "SharePoint",
+        "Power Automate"
+      ],
       "date": "2025–2026",
       "github": "",
       "screenshot": ""
@@ -45,7 +59,11 @@
       "desc": "Développeur de concepts innovation dual-IA. Personas SPARK (divergence) + FORGE (convergence) en séquence.",
       "context": "Outil d'idéation structurée : SPARK génère des concepts créatifs, FORGE les challenge et les structure. Deux personas IA complémentaires pour simuler un vrai brainstorm.",
       "status": "prod",
-      "tags": ["GenAI", "HTA", "Innovation"],
+      "tags": [
+        "GenAI",
+        "HTA",
+        "Innovation"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -57,7 +75,11 @@
       "desc": "Audit visuel sécurité incendie pour correspondants COSI. La vision GenAI bat la computer vision classique.",
       "context": "Démonstration que la GenAI vision (GPT-4o, Claude) surpasse YOLO/CNN pour l'audit terrain à coût quasi nul. Les correspondants COSI prennent une photo, l'IA identifie les non-conformités incendie.",
       "status": "mvp",
-      "tags": ["Vision IA", "Sécurité", "GenAI"],
+      "tags": [
+        "Vision IA",
+        "Sécurité",
+        "GenAI"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -69,7 +91,11 @@
       "desc": "Détection IA de graffitis sur matériel roulant. Bounding boxes, calibration dimensionnelle, estimation coût à 110 €/m².",
       "context": "Rivalité amicale avec le projet Graffimètre d'un collègue. L'approche GenAI vision détecte, dimensionne (calibration sur gabarit train connu) et chiffre le nettoyage automatiquement.",
       "status": "mvp",
-      "tags": ["Vision IA", "GenAI", "HTML/JS"],
+      "tags": [
+        "Vision IA",
+        "GenAI",
+        "HTML/JS"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -81,7 +107,12 @@
       "desc": "Analyseur de pitch pour le podcast : pipeline Whisper + GPT-4o, scoring 5 axes, radar chart, brief maquette.",
       "context": "Outil interne au podcast (Cr)Hack! pour évaluer les sujets proposés. Transcription Whisper → analyse GPT → score sur 5 axes → radar chart + pré-mortem automatique.",
       "status": "proto",
-      "tags": ["Podcast", "GenAI", "HTML/JS", "Whisper"],
+      "tags": [
+        "Podcast",
+        "GenAI",
+        "HTML/JS",
+        "Whisper"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -93,7 +124,12 @@
       "desc": "Suite complète d'acculturation IA Gen : ateliers collectifs, export JSON, générateur .eml, PromptExpress RAG, quiz Kahoot.",
       "context": "Plus de 2 000 collègues SNCF formés via ces ateliers. Outillage complet : page de sensibilisation interactive, assistant PromptExpress, générateur d'emails de suivi, quiz Kahoot intégré.",
       "status": "prod",
-      "tags": ["GenAI", "HTML/JS", "Formation", "RAG"],
+      "tags": [
+        "GenAI",
+        "HTML/JS",
+        "Formation",
+        "RAG"
+      ],
       "date": "2024–2025",
       "github": "",
       "screenshot": ""
@@ -105,7 +141,11 @@
       "desc": "Auto-évaluation maturité numérique des collectifs. Radar chart dynamique, recommandations formation personnalisées.",
       "context": "Permettre aux équipes SNCF d'évaluer leur maturité digitale sur plusieurs axes et recevoir des recommandations de formation ciblées. Radar chart Canvas, scoring pondéré.",
       "status": "prod",
-      "tags": ["GenAI", "HTML/JS", "Formation"],
+      "tags": [
+        "GenAI",
+        "HTML/JS",
+        "Formation"
+      ],
       "date": "2024",
       "github": "",
       "screenshot": ""
@@ -117,7 +157,11 @@
       "desc": "Calibration grille TCO par homographie projective. Détection automatique des onglets jaunes.",
       "context": "Les panneaux de contrôle ferroviaire utilisent des grilles avec des onglets jaunes. PicotScan corrige la perspective par homographie et détecte automatiquement les onglets pour la calibration.",
       "status": "proto",
-      "tags": ["Vision IA", "Sécurité", "HTML/JS"],
+      "tags": [
+        "Vision IA",
+        "Sécurité",
+        "HTML/JS"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -129,7 +173,11 @@
       "desc": "Assistant d'audit terrain 5S basé sur la vision GenAI — vs computer vision classique.",
       "context": "Skill GenAI vision pour les audits 5S terrain. Démontre que GPT-4o/Claude surpassent YOLO/CNN à une fraction du coût pour l'évaluation visuelle de l'ordre et la propreté.",
       "status": "proto",
-      "tags": ["Vision IA", "GenAI", "Sécurité"],
+      "tags": [
+        "Vision IA",
+        "GenAI",
+        "Sécurité"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -141,7 +189,11 @@
       "desc": "Matching recrutement IA avec anonymisation, multi-provider, scoring pondéré engagement/soft skills/technique.",
       "context": "Outil de matching CV ↔ offre d'emploi. Anonymisation automatique, support multi-provider (GPT, Claude), philosophie de scoring : engagement 40%, soft skills 30%, technique 20%.",
       "status": "reflexion",
-      "tags": ["RH", "GenAI", "HTML/JS"],
+      "tags": [
+        "RH",
+        "GenAI",
+        "HTML/JS"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -153,7 +205,11 @@
       "desc": "Gestion membres et événements pour l'association MGRH. GitHub Pages + Supabase, auth client-side SHA-256.",
       "context": "Migration d'un fichier HTML monolithique vers une architecture multi-fichiers GitHub Pages avec backend Supabase (PostgreSQL). Login client-side SHA-256, fiche réponse sécurité pour le pushback développeur.",
       "status": "mvp",
-      "tags": ["HTML/JS", "RH", "Supabase"],
+      "tags": [
+        "HTML/JS",
+        "RH",
+        "Supabase"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -165,7 +221,11 @@
       "desc": "Prototype planning hebdo en 5 étapes : brain dump, sync digital, capture photo, synthèse IA, vue consolidée.",
       "context": "Spin-off du podcast (Cr)Hack! — un outil de planification hebdomadaire guidé en 5 étapes qui mixe capture libre, synchronisation digitale et synthèse IA.",
       "status": "proto",
-      "tags": ["Podcast", "GenAI", "HTML/JS"],
+      "tags": [
+        "Podcast",
+        "GenAI",
+        "HTML/JS"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -177,7 +237,11 @@
       "desc": "Workflow 4 étapes pour l'analyse de verbatims : import Excel, classification GPT, synthèse, export structuré.",
       "context": "Les verbatims d'ateliers et d'enquêtes internes sont classifiés automatiquement par GPT via le gateway SNCF. Export structuré pour reporting.",
       "status": "prod",
-      "tags": ["GenAI", "HTA", "Data"],
+      "tags": [
+        "GenAI",
+        "HTA",
+        "Data"
+      ],
       "date": "2024",
       "github": "",
       "screenshot": ""
@@ -189,7 +253,11 @@
       "desc": "Comparaison photos sécurité ferroviaire avant/après pour zones d'excavation à proximité des voies.",
       "context": "Outil de corrélation visuelle pour les zones d'excavation proches des voies ferrées. Superposition et comparaison de photos avant/après travaux.",
       "status": "proto",
-      "tags": ["Sécurité", "Vision IA", "HTML/JS"],
+      "tags": [
+        "Sécurité",
+        "Vision IA",
+        "HTML/JS"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -201,7 +269,11 @@
       "desc": "Animation GIF morphing du logo 574 vers le logo FAN. Transition fluide pixel par pixel en vanilla JS.",
       "context": "Exercice créatif : transformer le logo de l'incubateur 574 vers le nouveau branding FAN avec une animation morphing frame par frame.",
       "status": "archive",
-      "tags": ["HTML/JS", "Animation", "SVG"],
+      "tags": [
+        "HTML/JS",
+        "Animation",
+        "SVG"
+      ],
       "date": "2024",
       "github": "",
       "screenshot": ""
@@ -213,7 +285,11 @@
       "desc": "Carte interactive Leaflet montrant les lignes TER passées à la concurrence vs maintenues SNCF post-libéralisation.",
       "context": "Visualisation géographique de l'impact de la libéralisation du transport ferroviaire régional. Couches Leaflet avec code couleur par opérateur.",
       "status": "archive",
-      "tags": ["Leaflet", "Data", "HTML/JS"],
+      "tags": [
+        "Leaflet",
+        "Data",
+        "HTML/JS"
+      ],
       "date": "2024",
       "github": "",
       "screenshot": ""
@@ -225,7 +301,11 @@
       "desc": "Infographie interactive de l'écosystème ferroviaire français. Navigation visuelle entre entités et leurs liens.",
       "context": "Représentation interactive de l'écosystème ferroviaire français : SNCF, ART, EPSF, régions, opérateurs… avec les liens fonctionnels entre chaque entité.",
       "status": "prod",
-      "tags": ["HTML/JS", "Data", "SVG"],
+      "tags": [
+        "HTML/JS",
+        "Data",
+        "SVG"
+      ],
       "date": "2024",
       "github": "",
       "screenshot": ""
@@ -237,7 +317,11 @@
       "desc": "Dashboard Power BI d'occupation des faisceaux de voies. Gantt interactif, Power Query + VBA pour transformation.",
       "context": "Transformation des exports TOVD (occupation des voies en technicentres) via macros VBA et Power Query, puis visualisation en dashboard Power BI avec Gantt interactif.",
       "status": "prod",
-      "tags": ["Power BI", "VBA", "Data"],
+      "tags": [
+        "Power BI",
+        "VBA",
+        "Data"
+      ],
       "date": "2023–2024",
       "github": "",
       "screenshot": ""
@@ -249,7 +333,10 @@
       "desc": "Calculateur de plans de prévention P0/P1/P2 pour travaux à proximité des voies ferrées.",
       "context": "Outil d'aide à la décision pour déterminer le niveau de plan de prévention requis selon la distance des travaux aux voies ferrées.",
       "status": "mvp",
-      "tags": ["HTML/JS", "Sécurité"],
+      "tags": [
+        "HTML/JS",
+        "Sécurité"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -261,7 +348,10 @@
       "desc": "Outil de mesure du temps de réverbération (TR60) conforme NF S31-080. Héritage acoustique ENSIM.",
       "context": "Résurgence du background acoustique (ENSIM 2010). Outil web de mesure du TR60 pour vérifier la conformité des espaces de travail à la norme NF S31-080.",
       "status": "proto",
-      "tags": ["HTML/JS", "Acoustique"],
+      "tags": [
+        "HTML/JS",
+        "Acoustique"
+      ],
       "date": "2024",
       "github": "",
       "screenshot": ""
@@ -273,7 +363,11 @@
       "desc": "Skill d'audit cybersécurité inspiré OWASP. Rapport HTML structuré avec scoring et recommandations.",
       "context": "Skill GenAI pour auditer la sécurité d'applications web internes. Checklist OWASP, scoring par catégorie, rapport HTML téléchargeable.",
       "status": "proto",
-      "tags": ["GenAI", "Sécurité", "HTML/JS"],
+      "tags": [
+        "GenAI",
+        "Sécurité",
+        "HTML/JS"
+      ],
       "date": "2025",
       "github": "",
       "screenshot": ""
@@ -285,7 +379,11 @@
       "desc": "Visualisations RH : pyramides des âges, strip plots, analyses démographiques. Python + HTML.",
       "context": "Suite de visualisations pour les équipes RH SNCF : pyramides des âges interactives, strip plots de répartition, analyses démographiques. Python pour le traitement, HTML pour le rendu.",
       "status": "mvp",
-      "tags": ["Python", "Data", "RH"],
+      "tags": [
+        "Python",
+        "Data",
+        "RH"
+      ],
       "date": "2024",
       "github": "",
       "screenshot": ""
