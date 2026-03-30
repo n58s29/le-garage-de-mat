@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Garage de Mat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ========== TOKENS ========== */
+:root {
+  --bg: #FAFAF8; --bg-card: #FFFFFF; --bg-el: #F3F2EE; --bg-overlay: rgba(0,0,0,.45);
+  --tx: #1A1A18; --tx2: #6B6A65; --tx3: #9C9B95;
+  --bd: #E5E4DF; --bd2: #D0CFC9;
+  --accent: #0057B8; --accent-bg: #E8F0FA;
+  --font-d: 'Space Mono', monospace; --font-b: 'DM Sans', sans-serif;
+  --r: 10px; --rs: 6px; --pill: 999px;
+}
+[data-theme="dark"] {
+  --bg: #141413; --bg-card: #1E1E1C; --bg-el: #2A2A27; --bg-overlay: rgba(0,0,0,.65);
+  --tx: #EAEAE6; --tx2: #9C9B95; --tx3: #6B6A65;
+  --bd: #333330; --bd2: #4A4A45;
+  --accent: #5BA3E8; --accent-bg: #1A2A3D;
+}
+
+/* ========== RESET ========== */
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-b);background:var(--bg);color:var(--tx);line-height:1.6;transition:background .3s,color .3s}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ========== LAYOUT ========== */
+.container{max-width:980px;margin:0 auto;padding:0 24px}
+
+/* ========== HEADER ========== */
+header{padding:44px 0 32px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px}
+.brand h1{font-family:var(--font-d);font-size:26px;font-weight:700;letter-spacing:-.5px}
+.brand .tagline{font-size:14px;color:var(--tx2);margin-top:4px;max-width:480px}
+.header-actions{display:flex;align-items:center;gap:12px}
+.theme-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--bd);background:var(--bg-card);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:border-color .15s}
+.theme-btn:hover{border-color:var(--bd2)}
+
+/* ========== STATS ========== */
+.stats{display:flex;gap:8px;margin:0 0 28px;flex-wrap:wrap}
+.stat{display:flex;align-items:baseline;gap:5px;background:var(--bg-el);padding:7px 13px;border-radius:var(--pill);font-size:13px;color:var(--tx2)}
+.stat strong{font-size:15px;font-weight:600;color:var(--tx)}
+
+/* ========== SEARCH ========== */
+.search-wrap{position:relative;margin-bottom:16px}
+.search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--tx3);pointer-events:none}
+.search-input{width:100%;padding:10px 16px 10px 40px;font-family:var(--font-b);font-size:14px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg-card);color:var(--tx);outline:none;transition:border-color .15s}
+.search-input::placeholder{color:var(--tx3)}
+.search-input:focus{border-color:var(--accent)}
+
+/* ========== FILTERS ========== */
+.filter-row{margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.filter-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);min-width:50px}
+.pill{font-family:var(--font-b);font-size:12px;padding:4px 11px;border-radius:var(--pill);border:1px solid var(--bd);background:transparent;color:var(--tx2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.pill:hover{border-color:var(--bd2);color:var(--tx)}
+.pill.on{background:var(--tx);color:var(--bg);border-color:transparent}
+
+/* ========== DIVIDER + COUNT ========== */
+.divider{height:1px;background:var(--bd);margin:18px 0}
+.count{font-size:12px;color:var(--tx3);font-family:var(--font-d);margin-bottom:14px}
+
+/* ========== GRID ========== */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;padding-bottom:60px}
+
+/* ========== CARD ========== */
+.card{background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--bd2);transform:translateY(-2px)}
+.card-vis{height:100px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.card-vis .ico{font-size:30px;position:relative;z-index:1}
+.card-body{padding:12px 14px 14px}
+.card-top{display:flex;justify-content:space-between;align-items:start;gap:8px;margin-bottom:3px}
+.card-title{font-family:var(--font-d);font-size:13px;font-weight:700;letter-spacing:-.2px}
+.card-desc{font-size:12.5px;color:var(--tx2);line-height:1.5;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-tags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px}
+.tag{font-size:10px;padding:2px 7px;border-radius:var(--pill);background:var(--bg-el);color:var(--tx2);font-weight:500}
+.card-foot{display:flex;align-items:center;justify-content:space-between;padding-top:7px;border-top:1px solid var(--bd)}
+.card-date{font-size:10px;color:var(--tx3)}
+.card-gh{font-size:10px;color:var(--accent);font-weight:500}
+
+/* ========== STATUS BADGES ========== */
+.st{font-size:9px;font-weight:600;padding:2px 7px;border-radius:var(--pill);white-space:nowrap;display:inline-flex;align-items:center;gap:3px}
+.st::before{content:'';width:5px;height:5px;border-radius:50%}
+.st-prod{background:#E7F5E8;color:#2D6A30}.st-prod::before{background:#3DA142}
+.st-mvp{background:#E0EDFC;color:#1A5AA0}.st-mvp::before{background:#3B8BD4}
+.st-proto{background:#FFF3DC;color:#8A5D10}.st-proto::before{background:#D49A20}
+.st-reflexion{background:#EEECFE;color:#5B4BBF}.st-reflexion::before{background:#7B6FD4}
+.st-archive{background:var(--bg-el);color:var(--tx3)}.st-archive::before{background:var(--tx3)}
+[data-theme="dark"] .st-prod{background:#1A3A1B;color:#7DD381}[data-theme="dark"] .st-prod::before{background:#5BBF60}
+[data-theme="dark"] .st-mvp{background:#152D4A;color:#7DB8E8}[data-theme="dark"] .st-mvp::before{background:#5BA3E8}
+[data-theme="dark"] .st-proto{background:#3A2C0E;color:#E8BA50}[data-theme="dark"] .st-proto::before{background:#D4A830}
+[data-theme="dark"] .st-reflexion{background:#2A254A;color:#A99FE0}[data-theme="dark"] .st-reflexion::before{background:#8B7FD4}
+
+/* ========== MODAL ========== */
+.modal-bg{position:fixed;inset:0;background:var(--bg-overlay);z-index:100;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px)}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg-card);border:1px solid var(--bd);border-radius:12px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;position:relative}
+.modal-close{position:absolute;top:12px;right:14px;width:32px;height:32px;border-radius:50%;border:1px solid var(--bd);background:var(--bg-card);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--tx2);z-index:1}
+.modal-close:hover{border-color:var(--bd2);color:var(--tx)}
+.modal-vis{height:140px;display:flex;align-items:center;justify-content:center;border-radius:12px 12px 0 0;overflow:hidden;position:relative}
+.modal-vis .ico{font-size:48px;position:relative;z-index:1}
+.modal-body{padding:24px}
+.modal-title{font-family:var(--font-d);font-size:20px;font-weight:700;margin-bottom:4px}
+.modal-status{margin-bottom:16px}
+.modal-section{margin-bottom:16px}
+.modal-section-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);margin-bottom:4px}
+.modal-section p{font-size:14px;color:var(--tx2);line-height:1.6}
+.modal-tags{display:flex;flex-wrap:wrap;gap:5px}
+.modal-tags .tag{font-size:12px;padding:4px 10px}
+.modal-meta{display:flex;gap:20px;font-size:13px;color:var(--tx2);padding-top:16px;border-top:1px solid var(--bd);margin-top:8px}
+.modal-meta a{font-weight:500}
+
+/* ========== EMPTY ========== */
+.empty{text-align:center;padding:60px 20px;color:var(--tx3);display:none}
+.empty .e-ico{font-size:32px;margin-bottom:10px}
+.empty p{font-size:14px}
+
+/* ========== FOOTER ========== */
+footer{text-align:center;padding:20px 0 40px;font-size:12px;color:var(--tx3)}
+footer a{color:var(--tx2)}
+
+/* ========== ANIM ========== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:640px){
+  .grid{grid-template-columns:1fr}
+  header{flex-direction:column}
+  .modal{max-height:92vh;margin:8px}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="brand">
+      <h1>🔧 Le Garage de Mat</h1>
+      <div class="tagline">Chef de Projet Innovation · SNCF — Outils frugaux, IA générative, vibecoding & bricolage numérique.</div>
+    </div>
+    <div class="header-actions">
+      <button class="theme-btn" id="theme-toggle" title="Changer le thème">🌙</button>
+    </div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="search-wrap">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input class="search-input" type="text" id="search" placeholder="Rechercher un projet, une techno, un thème…" autocomplete="off">
+  </div>
+
+  <div class="filter-row" id="status-row"><span class="filter-label">Statut</span></div>
+  <div class="filter-row" id="tag-row"><span class="filter-label">Thèmes</span></div>
+
+  <div class="divider"></div>
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty"><div class="e-ico">🔍</div><p>Aucun projet ne correspond.</p></div>
+
+  <footer>Le Garage de Mat — vibecoding depuis 2023 · <a href="admin.html">Admin</a></footer>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modal-close">&times;</button>
+    <div class="modal-vis" id="m-vis"><span class="ico" id="m-ico"></span></div>
+    <div class="modal-body">
+      <div class="modal-title" id="m-title"></div>
+      <div class="modal-status" id="m-status"></div>
+      <div class="modal-section"><div class="modal-section-label">Description</div><p id="m-desc"></p></div>
+      <div class="modal-section"><div class="modal-section-label">Contexte</div><p id="m-ctx"></p></div>
+      <div class="modal-section"><div class="modal-section-label">Technologies & thèmes</div><div class="modal-tags" id="m-tags"></div></div>
+      <div class="modal-meta" id="m-meta"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ========== SANITIZE ========== */
+function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+
+/* ========== THEME ========== */
+const html=document.documentElement, tog=document.getElementById('theme-toggle');
+let theme=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+function applyTheme(){html.dataset.theme=theme;tog.textContent=theme==='dark'?'☀️':'🌙';localStorage.setItem('theme',theme)}
+tog.onclick=()=>{theme=theme==='dark'?'light':'dark';applyTheme()};
+applyTheme();
+
+/* ========== DATA ========== */
+let PROJECTS=[];
+const STATUSES=[{k:'all',l:'Tous'},{k:'prod',l:'En prod'},{k:'mvp',l:'MVP'},{k:'proto',l:'Proto'},{k:'reflexion',l:'Réflexion'},{k:'archive',l:'Archivé'}];
+const STATUS_MAP={prod:{l:'En prod',c:'st-prod'},mvp:{l:'MVP',c:'st-mvp'},proto:{l:'Proto',c:'st-proto'},reflexion:{l:'Réflexion',c:'st-reflexion'},archive:{l:'Archivé',c:'st-archive'}};
+let activeStatus='all', activeTags=new Set();
+
+async function loadData(){
+  try{
+    const r=await fetch('projects.json');
+    const d=await r.json();
+    PROJECTS=d.projects||[];
+  }catch(e){
+    console.error('Failed to load projects.json',e);
+    PROJECTS=[];
+  }
+  init();
+}
+
+function init(){
+  // Stats
+  const counts={};PROJECTS.forEach(p=>{counts[p.status]=(counts[p.status]||0)+1});
+  document.getElementById('stats').innerHTML=
+    `<div class="stat"><strong>${PROJECTS.length}</strong> projets</div>`+
+    `<div class="stat"><strong>${counts.prod||0}</strong> en prod</div>`+
+    `<div class="stat"><strong>${counts.mvp||0}</strong> MVP</div>`+
+    `<div class="stat"><strong>${counts.proto||0}</strong> proto</div>`;
+
+  // Status pills
+  const sr=document.getElementById('status-row');
+  STATUSES.forEach(s=>{
+    const b=document.createElement('button');b.className='pill'+(s.k==='all'?' on':'');b.textContent=s.l;
+    b.onclick=()=>{activeStatus=s.k;sr.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));b.classList.add('on');render()};
+    sr.appendChild(b);
+  });
+
+  // Tag pills
+  const allTags=[...new Set(PROJECTS.flatMap(p=>p.tags))].sort();
+  const tr=document.getElementById('tag-row');
+  allTags.forEach(t=>{
+    const b=document.createElement('button');b.className='pill';b.textContent=t;
+    b.onclick=()=>{if(activeTags.has(t)){activeTags.delete(t);b.classList.remove('on')}else{activeTags.add(t);b.classList.add('on')}render()};
+    tr.appendChild(b);
+  });
+
+  document.getElementById('search').addEventListener('input',render);
+  render();
+}
+
+function render(){
+  const q=document.getElementById('search').value.toLowerCase().trim();
+  const list=PROJECTS.filter(p=>{
+    if(activeStatus!=='all'&&p.status!==activeStatus)return false;
+    if(activeTags.size>0&&!p.tags.some(t=>activeTags.has(t)))return false;
+    if(q){const h=(p.title+' '+p.desc+' '+p.context+' '+p.tags.join(' ')).toLowerCase();return q.split(/\s+/).every(w=>h.includes(w))}
+    return true;
+  });
+
+  document.getElementById('count').textContent=list.length+' projet'+(list.length!==1?'s':'');
+  const grid=document.getElementById('grid'), empty=document.getElementById('empty');
+
+  if(!list.length){grid.innerHTML='';empty.style.display='block';return}
+  empty.style.display='none';
+
+  grid.innerHTML=list.map((p,i)=>{
+    const sm=STATUS_MAP[p.status]||{l:'?',c:''};
+    return `<div class="card" style="animation:fadeUp .3s ease both;animation-delay:${i*35}ms" data-id="${esc(p.id)}">
+      <div class="card-vis" style="background:${esc(p.screenshot?'var(--bg-el)':'#'+hashColor(p.title))}">
+        <span class="ico">${esc(p.icon)}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <span class="card-title">${esc(p.title)}</span>
+          <span class="st ${sm.c}">${esc(sm.l)}</span>
+        </div>
+        <div class="card-desc">${esc(p.desc)}</div>
+        <div class="card-tags">${p.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
+        <div class="card-foot">
+          <span class="card-date">${esc(p.date)}</span>
+          ${p.github?`<span class="card-gh">GitHub ↗</span>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Card click → modal
+  grid.querySelectorAll('.card').forEach(c=>{
+    c.addEventListener('click',()=>{
+      const p=PROJECTS.find(x=>x.id===c.dataset.id);
+      if(p)openModal(p);
+    });
+  });
+}
+
+/* ========== COLOR HASH ========== */
+const PALETTE=['D6E8F8','E3E0FA','D8EDDA','FBE9C8','FBD9D9','F5DAEB','D4F0E6','E8F0FA','FFF3DC','EEECFE'];
+function hashColor(s){let h=0;for(let i=0;i<s.length;i++)h=s.charCodeAt(i)+((h<<5)-h);return PALETTE[Math.abs(h)%PALETTE.length]}
+
+/* ========== MODAL ========== */
+const modalBg=document.getElementById('modal-bg');
+function openModal(p){
+  const sm=STATUS_MAP[p.status]||{l:'?',c:''};
+  document.getElementById('m-vis').style.background='#'+hashColor(p.title);
+  document.getElementById('m-ico').textContent=p.icon;
+  document.getElementById('m-title').textContent=p.title;
+  document.getElementById('m-status').innerHTML=`<span class="st ${sm.c}">${esc(sm.l)}</span>`;
+  document.getElementById('m-desc').textContent=p.desc;
+  document.getElementById('m-ctx').textContent=p.context||'Pas de contexte renseigné.';
+  document.getElementById('m-tags').innerHTML=p.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('');
+  let meta=`<span>📅 ${esc(p.date)}</span>`;
+  if(p.github)meta+=`<a href="${esc(p.github)}" target="_blank" rel="noopener">GitHub ↗</a>`;
+  document.getElementById('m-meta').innerHTML=meta;
+  modalBg.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){modalBg.classList.remove('open');document.body.style.overflow=''}
+document.getElementById('modal-close').onclick=closeModal;
+modalBg.addEventListener('click',e=>{if(e.target===modalBg)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+/* ========== LOAD ========== */
+loadData();
+</script>
+</body>
+</html>

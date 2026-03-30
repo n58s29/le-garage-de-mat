@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Garage de Mat — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF8;--bg2:#FFFFFF;--bg3:#F3F2EE;
+  --tx:#1A1A18;--tx2:#6B6A65;--tx3:#9C9B95;
+  --bd:#E5E4DF;--bd2:#D0CFC9;
+  --accent:#0057B8;--accent-bg:#E8F0FA;
+  --danger:#C53030;--danger-bg:#FFF0F0;
+  --success:#2D6A30;--success-bg:#E7F5E8;
+  --warn:#8A5D10;--warn-bg:#FFF8EB;
+  --font-d:'Space Mono',monospace;--font-b:'DM Sans',sans-serif;
+  --r:10px;--pill:999px;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#141413;--bg2:#1E1E1C;--bg3:#2A2A27;
+  --tx:#EAEAE6;--tx2:#9C9B95;--tx3:#6B6A65;
+  --bd:#333330;--bd2:#4A4A45;
+  --accent:#5BA3E8;--accent-bg:#1A2A3D;
+  --danger:#E87B7B;--danger-bg:#3A1A1A;
+  --success:#7DD381;--success-bg:#1A3A1B;
+  --warn:#E8BA50;--warn-bg:#3A2C0E;
+}}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-b);background:var(--bg);color:var(--tx);line-height:1.6}
+.container{max-width:800px;margin:0 auto;padding:0 24px}
+
+header{padding:36px 0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;border-bottom:1px solid var(--bd);margin-bottom:24px}
+header h1{font-family:var(--font-d);font-size:20px;font-weight:700}
+header a{font-size:13px;color:var(--accent);text-decoration:none}
+header a:hover{text-decoration:underline}
+
+.lock{max-width:360px;margin:80px auto;text-align:center}
+.lock h2{font-family:var(--font-d);font-size:18px;margin-bottom:8px}
+.lock p{font-size:13px;color:var(--tx2);margin-bottom:20px}
+.lock input{width:100%;padding:10px 14px;font-family:var(--font-b);font-size:14px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg2);color:var(--tx);outline:none;margin-bottom:12px;text-align:center}
+.lock input:focus{border-color:var(--accent)}
+.lock-hint{font-size:11px;color:var(--tx3);margin-top:8px}
+.lock-error{font-size:12px;color:var(--danger);margin-top:8px;display:none}
+.lock-first{font-size:12px;color:var(--warn);background:var(--warn-bg);padding:8px 12px;border-radius:var(--r);margin-top:12px;display:none;text-align:left;line-height:1.5}
+
+.btn{font-family:var(--font-b);font-size:13px;font-weight:500;padding:8px 16px;border-radius:var(--r);cursor:pointer;border:1px solid var(--bd);background:var(--bg2);color:var(--tx);transition:all .15s}
+.btn:hover{border-color:var(--bd2);background:var(--bg3)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{opacity:.9;background:var(--accent)}
+.btn-danger{color:var(--danger);border-color:var(--danger)}
+.btn-danger:hover{background:var(--danger-bg)}
+.btn-sm{padding:5px 10px;font-size:12px}
+
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+
+.toast{position:fixed;top:20px;right:20px;padding:10px 18px;border-radius:var(--r);font-size:13px;font-weight:500;z-index:200;opacity:0;transform:translateY(-10px);transition:all .3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast-ok{background:var(--success-bg);color:var(--success);border:1px solid var(--success)}
+.toast-err{background:var(--danger-bg);color:var(--danger);border:1px solid var(--danger)}
+
+.tbl-wrap{overflow-x:auto;margin-bottom:24px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);padding:8px 10px;border-bottom:1px solid var(--bd)}
+td{padding:8px 10px;border-bottom:1px solid var(--bd);vertical-align:top}
+tr:hover td{background:var(--bg3)}
+.st{font-size:9px;font-weight:600;padding:2px 7px;border-radius:var(--pill);white-space:nowrap}
+.st-prod{background:#E7F5E8;color:#2D6A30}
+.st-mvp{background:#E0EDFC;color:#1A5AA0}
+.st-proto{background:#FFF3DC;color:#8A5D10}
+.st-reflexion{background:#EEECFE;color:#5B4BBF}
+.st-archive{background:var(--bg3);color:var(--tx3)}
+@media(prefers-color-scheme:dark){
+  .st-prod{background:#1A3A1B;color:#7DD381}
+  .st-mvp{background:#152D4A;color:#7DB8E8}
+  .st-proto{background:#3A2C0E;color:#E8BA50}
+  .st-reflexion{background:#2A254A;color:#A99FE0}
+}
+
+.form-panel{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:24px;margin-bottom:24px;display:none}
+.form-panel.open{display:block}
+.form-panel h3{font-family:var(--font-d);font-size:15px;margin-bottom:16px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:4px}
+.fg input,.fg textarea,.fg select{width:100%;padding:8px 12px;font-family:var(--font-b);font-size:13px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg);color:var(--tx);outline:none;resize:vertical}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--accent)}
+.fg .hint{font-size:11px;color:var(--tx3);margin-top:3px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-actions{display:flex;gap:8px;margin-top:16px}
+
+.file-input{display:none}
+footer{text-align:center;padding:24px 0 40px;font-size:12px;color:var(--tx3)}
+</style>
+</head>
+<body>
+
+<div id="toast" class="toast"></div>
+
+<!-- ===== LOCK SCREEN ===== -->
+<div id="lock-screen" class="lock">
+  <h2>🔧 Admin</h2>
+  <p>Entre ta passphrase pour accéder au Garage.</p>
+  <input type="password" id="passphrase-input" placeholder="Passphrase secrète" autofocus>
+  <button class="btn btn-primary" style="width:100%" id="unlock-btn" onclick="unlock()">Entrer</button>
+  <div class="lock-error" id="lock-error">Passphrase incorrecte. Réessaye.</div>
+  <div class="lock-first" id="lock-first">🆕 Première utilisation détectée. La passphrase que tu vas taper deviendra la clé de ton Garage. Choisis-la bien et retiens-la !</div>
+  <div class="lock-hint">Aucun secret stocké en clair. Jamais.</div>
+</div>
+
+<!-- ===== MAIN PANEL ===== -->
+<div id="main" style="display:none">
+<div class="container">
+  <header>
+    <h1>🔧 Le Garage — Admin</h1>
+    <a href="index.html">← Retour au portfolio</a>
+  </header>
+
+  <div class="toolbar">
+    <button class="btn btn-primary" onclick="showForm()">+ Nouveau projet</button>
+    <button class="btn" onclick="document.getElementById('import-file').click()">📥 Importer JSON</button>
+    <button class="btn" onclick="exportJSON()">📤 Exporter JSON</button>
+    <input type="file" id="import-file" class="file-input" accept=".json" onchange="importJSON(event)">
+    <span style="flex:1"></span>
+    <button class="btn btn-sm" onclick="doLock()" title="Verrouiller">🔒 Verrouiller</button>
+  </div>
+
+  <div class="form-panel" id="form-panel">
+    <h3 id="form-title">Nouveau projet</h3>
+    <input type="hidden" id="f-id">
+    <div class="form-row">
+      <div class="fg"><label>Titre *</label><input id="f-title" placeholder="CadrageExpress"></div>
+      <div class="fg"><label>Icône (emoji)</label><input id="f-icon" placeholder="🎯" maxlength="4"></div>
+    </div>
+    <div class="fg"><label>Description courte *</label><textarea id="f-desc" rows="2" placeholder="Une phrase d'accroche…"></textarea></div>
+    <div class="fg"><label>Contexte métier</label><textarea id="f-ctx" rows="3" placeholder="Pourquoi ce projet existe, quel problème il résout…"></textarea></div>
+    <div class="form-row">
+      <div class="fg">
+        <label>Statut *</label>
+        <select id="f-status">
+          <option value="reflexion">💡 Réflexion</option>
+          <option value="proto">🧪 Proto</option>
+          <option value="mvp">🚧 MVP</option>
+          <option value="prod">✅ En prod</option>
+          <option value="archive">📦 Archivé</option>
+        </select>
+      </div>
+      <div class="fg"><label>Date / période</label><input id="f-date" placeholder="2025"></div>
+    </div>
+    <div class="fg"><label>Tags</label><input id="f-tags" placeholder="GenAI, HTML/JS, Sécurité"><div class="hint">Séparés par des virgules</div></div>
+    <div class="form-row">
+      <div class="fg"><label>Lien GitHub</label><input id="f-gh" placeholder="https://github.com/…"></div>
+      <div class="fg"><label>URL screenshot</label><input id="f-screen" placeholder="https://…"></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-primary" onclick="saveProject()">Enregistrer</button>
+      <button class="btn" onclick="hideForm()">Annuler</button>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:30px"></th><th>Projet</th><th>Statut</th><th>Tags</th><th>Date</th><th style="width:100px">Actions</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <div id="empty-msg" style="text-align:center;padding:40px;color:var(--tx3);font-size:14px;display:none">Aucun projet. Clique sur "+ Nouveau projet" pour commencer.</div>
+
+  <footer>Le Garage de Mat — Admin Panel</footer>
+</div>
+</div>
+
+<script>
+function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+
+function toast(msg,ok=true){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+(ok?'toast-ok':'toast-err')+' show';
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+async function computeHMAC(pass,data){
+  const enc=new TextEncoder();
+  const key=await crypto.subtle.importKey('raw',enc.encode(pass),{name:'HMAC',hash:'SHA-256'},false,['sign']);
+  const sig=await crypto.subtle.sign('HMAC',key,enc.encode(data));
+  return Array.from(new Uint8Array(sig)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+const VERIFY_SALT='garage-de-mat-verify-v1';
+const DATA_SALT='garage-de-mat-data-v1';
+async function makeVerifyHash(pass){ return computeHMAC(pass,VERIFY_SALT) }
+async function makeDataSignature(pass,arr){ return computeHMAC(pass,DATA_SALT+JSON.stringify(arr)) }
+
+let PASS='', PROJECTS=[], storedVerify='', storedData=null, isFirstTime=false;
+
+async function boot(){
+  try{
+    const r=await fetch('projects.json');
+    storedData=await r.json();
+    storedVerify=storedData._verify||'';
+    isFirstTime=!storedVerify;
+  }catch(e){ storedData=null;storedVerify='';isFirstTime=true }
+  if(isFirstTime) document.getElementById('lock-first').style.display='block';
+}
+boot();
+
+async function unlock(){
+  const v=document.getElementById('passphrase-input').value.trim();
+  if(!v){toast('Entre une passphrase.',false);return}
+  const errEl=document.getElementById('lock-error');
+  const btn=document.getElementById('unlock-btn');
+  btn.disabled=true;btn.textContent='Vérification…';
+
+  if(isFirstTime){
+    PASS=v;
+    if(storedData&&Array.isArray(storedData.projects)) PROJECTS=storedData.projects.map(sanitizeProject);
+    document.getElementById('lock-screen').style.display='none';
+    document.getElementById('main').style.display='block';
+    renderTable();
+    toast('Première configuration. Exporte pour signer ton JSON !');
+  }else{
+    const hash=await makeVerifyHash(v);
+    if(hash===storedVerify){
+      PASS=v;
+      if(storedData&&Array.isArray(storedData.projects)){
+        if(storedData._signature){
+          const dataSig=await makeDataSignature(v,storedData.projects);
+          if(dataSig!==storedData._signature){
+            toast('Données corrompues : signature des projets invalide.',false);
+            btn.disabled=false;btn.textContent='Entrer';return;
+          }
+        }
+        PROJECTS=storedData.projects.map(sanitizeProject);
+      }
+      document.getElementById('lock-screen').style.display='none';
+      document.getElementById('main').style.display='block';
+      errEl.style.display='none';
+      renderTable();
+      toast('Session ouverte.');
+    }else{
+      errEl.style.display='block';
+      toast('Passphrase incorrecte.',false);
+    }
+  }
+  btn.disabled=false;btn.textContent='Entrer';
+}
+
+function doLock(){
+  PASS='';PROJECTS=[];
+  document.getElementById('main').style.display='none';
+  document.getElementById('lock-screen').style.display='block';
+  document.getElementById('passphrase-input').value='';
+  document.getElementById('lock-error').style.display='none';
+  document.getElementById('passphrase-input').focus();
+}
+document.getElementById('passphrase-input').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
+
+function validateProject(p){
+  if(!p||typeof p!=='object')return false;
+  if(typeof p.title!=='string'||!p.title.trim())return false;
+  if(typeof p.desc!=='string')return false;
+  if(!['prod','mvp','proto','reflexion','archive'].includes(p.status))return false;
+  if(!Array.isArray(p.tags)||p.tags.some(t=>typeof t!=='string'))return false;
+  if(p.title.length>200||p.desc.length>2000||p.tags.length>20)return false;
+  return true;
+}
+
+function sanitizeProject(p){
+  return{
+    id:p.id||slugify(p.title)+'-'+Date.now().toString(36),
+    title:(p.title||'').slice(0,200).trim(),
+    icon:(p.icon||'📦').slice(0,4),
+    desc:(p.desc||'').slice(0,2000).trim(),
+    context:(p.context||'').slice(0,3000).trim(),
+    status:p.status||'proto',
+    tags:(p.tags||[]).map(t=>t.trim().slice(0,50)).filter(Boolean).slice(0,20),
+    date:(p.date||'').slice(0,50).trim(),
+    github:(p.github||'').slice(0,500).trim(),
+    screenshot:(p.screenshot||'').slice(0,500).trim()
+  };
+}
+function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,60)}
+
+async function importJSON(e){
+  const file=e.target.files[0];if(!file)return;
+  e.target.value='';
+  try{
+    const txt=await file.text();
+    const data=JSON.parse(txt);
+    if(!data.projects||!Array.isArray(data.projects))throw new Error('Array "projects" manquant.');
+    for(let i=0;i<data.projects.length;i++){
+      if(!validateProject(data.projects[i]))throw new Error(`Projet #${i+1} invalide.`);
+    }
+    if(data._verify){
+      const ev=await makeVerifyHash(PASS);
+      if(data._verify!==ev){toast('JSON signé avec une autre passphrase. Import refusé.',false);return}
+    }
+    if(data._signature){
+      const es=await makeDataSignature(PASS,data.projects);
+      if(data._signature!==es){toast('Signature données invalide. JSON altéré.',false);return}
+    }
+    if(!data._verify&&!data._signature){
+      if(!confirm('JSON non signé. Accepter quand même ? (Pense à exporter pour signer.)'))return;
+    }
+    PROJECTS=data.projects.map(sanitizeProject);
+    renderTable();
+    toast(`${PROJECTS.length} projets importés.`);
+  }catch(err){toast('Erreur : '+err.message,false)}
+}
+
+async function exportJSON(){
+  if(!PROJECTS.length){toast('Aucun projet à exporter.',false);return}
+  const verify=await makeVerifyHash(PASS);
+  const sig=await makeDataSignature(PASS,PROJECTS);
+  const output=JSON.stringify({_verify:verify,_signature:sig,projects:PROJECTS},null,2);
+  const blob=new Blob([output],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='projects.json';a.click();
+  URL.revokeObjectURL(url);
+  toast('JSON exporté et signé.');
+}
+
+const STATUS_MAP={prod:{l:'En prod',c:'st-prod'},mvp:{l:'MVP',c:'st-mvp'},proto:{l:'Proto',c:'st-proto'},reflexion:{l:'Réflexion',c:'st-reflexion'},archive:{l:'Archivé',c:'st-archive'}};
+
+function renderTable(){
+  const tb=document.getElementById('tbody'), em=document.getElementById('empty-msg');
+  if(!PROJECTS.length){tb.innerHTML='';em.style.display='block';return}
+  em.style.display='none';
+  tb.innerHTML=PROJECTS.map((p,i)=>{
+    const sm=STATUS_MAP[p.status]||{l:'?',c:''};
+    return `<tr>
+      <td>${esc(p.icon)}</td>
+      <td><strong>${esc(p.title)}</strong><br><span style="font-size:11px;color:var(--tx3)">${esc(p.desc).slice(0,60)}${p.desc.length>60?'…':''}</span></td>
+      <td><span class="st ${sm.c}">${esc(sm.l)}</span></td>
+      <td style="font-size:11px;color:var(--tx2)">${p.tags.map(t=>esc(t)).join(', ')}</td>
+      <td style="font-size:12px;color:var(--tx3)">${esc(p.date)}</td>
+      <td>
+        <button class="btn btn-sm" onclick="editProject(${i})">✏️</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteProject(${i})">🗑️</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+let editingIndex=-1;
+function showForm(idx){
+  editingIndex=typeof idx==='number'?idx:-1;
+  document.getElementById('form-title').textContent=editingIndex>=0?'Modifier le projet':'Nouveau projet';
+  if(editingIndex>=0){
+    const p=PROJECTS[editingIndex];
+    document.getElementById('f-id').value=p.id;
+    document.getElementById('f-title').value=p.title;
+    document.getElementById('f-icon').value=p.icon;
+    document.getElementById('f-desc').value=p.desc;
+    document.getElementById('f-ctx').value=p.context;
+    document.getElementById('f-status').value=p.status;
+    document.getElementById('f-date').value=p.date;
+    document.getElementById('f-tags').value=p.tags.join(', ');
+    document.getElementById('f-gh').value=p.github;
+    document.getElementById('f-screen').value=p.screenshot;
+  }else{
+    ['f-id','f-title','f-icon','f-desc','f-ctx','f-date','f-tags','f-gh','f-screen'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('f-status').value='proto';
+  }
+  const panel=document.getElementById('form-panel');
+  panel.classList.add('open');
+  document.getElementById('f-title').focus();
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function hideForm(){document.getElementById('form-panel').classList.remove('open');editingIndex=-1}
+
+function saveProject(){
+  const title=document.getElementById('f-title').value.trim();
+  const desc=document.getElementById('f-desc').value.trim();
+  if(!title){toast('Titre requis.',false);return}
+  if(!desc){toast('Description requise.',false);return}
+  const p=sanitizeProject({
+    id:document.getElementById('f-id').value||undefined,title,
+    icon:document.getElementById('f-icon').value.trim()||'📦',desc,
+    context:document.getElementById('f-ctx').value.trim(),
+    status:document.getElementById('f-status').value,
+    tags:document.getElementById('f-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+    date:document.getElementById('f-date').value.trim(),
+    github:document.getElementById('f-gh').value.trim(),
+    screenshot:document.getElementById('f-screen').value.trim()
+  });
+  if(editingIndex>=0){PROJECTS[editingIndex]=p;toast('Projet modifié.')}
+  else{PROJECTS.unshift(p);toast('Projet ajouté.')}
+  hideForm();renderTable();
+}
+function editProject(i){showForm(i)}
+function deleteProject(i){
+  if(!confirm(`Supprimer "${PROJECTS[i]?.title}" ?`))return;
+  PROJECTS.splice(i,1);renderTable();toast('Projet supprimé.');
+}
+</script>
+</body>
+</html>
