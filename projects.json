@@ -1,21 +1,7 @@
 {
   "_verify": "b7141902da7651c09ea78408adaf519de968d3be077c29bbe67c836dadf9a518",
-  "_signature": "23e46648f19bca21a1411f50e52f1e791a02e79b6e6c828f737b1c4e5205f01a",
+  "_signature": "fb57a1cf4b12153b0a4ea7b67d3bdba1e27dfe6cd7285b3c999ee9819ecdbaa0",
   "projects": [
-    {
-      "id": "test-mnczok7s",
-      "title": "TEST",
-      "icon": "📦",
-      "desc": "TEST",
-      "context": "TEST",
-      "status": "reflexion",
-      "tags": [
-        "GenAI"
-      ],
-      "date": "",
-      "github": "",
-      "screenshot": ""
-    },
     {
       "id": "cadrage-express",
       "title": "CadrageExpress",
@@ -64,7 +50,7 @@
       ],
       "date": "2025–2026",
       "github": "",
-      "screenshot": "https://github.com/n58s29/le-garage-de-mat/blob/main/screenshots/sorunning_challengeconnecte.jpg"
+      "screenshot": ""
     },
     {
       "id": "motorinno",
@@ -161,22 +147,6 @@
         "Formation"
       ],
       "date": "2024",
-      "github": "",
-      "screenshot": ""
-    },
-    {
-      "id": "picotscan",
-      "title": "PicotScan",
-      "icon": "📐",
-      "desc": "Calibration grille TCO par homographie projective. Détection automatique des onglets jaunes.",
-      "context": "Les panneaux de contrôle ferroviaire utilisent des grilles avec des onglets jaunes. PicotScan corrige la perspective par homographie et détecte automatiquement les onglets pour la calibration.",
-      "status": "proto",
-      "tags": [
-        "Vision IA",
-        "Sécurité",
-        "HTML/JS"
-      ],
-      "date": "2025",
       "github": "",
       "screenshot": ""
     },
