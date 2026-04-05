@@ -694,38 +694,29 @@ function loadConfig() {
     const s = localStorage.getItem('portfolio-cfg');
     if (s) {
       const local = JSON.parse(s);
-      // Seules les données privées viennent du localStorage
       if (local.pwHash)  config.pwHash  = local.pwHash;
       if (local.ghToken) config.ghToken = local.ghToken;
+      if (local.hidden)  config.hidden  = local.hidden;
     }
   } catch {}
 }
 
 function saveConfig() {
   try {
-    // Sauvegarder uniquement les données privées en local
+    // Privé (token, mot de passe, repos cachés) → localStorage
     localStorage.setItem('portfolio-cfg', JSON.stringify({
       pwHash:  config.pwHash,
-      ghToken: config.ghToken
+      ghToken: config.ghToken,
+      hidden:  config.hidden
     }));
   } catch {}
-  // Sauvegarder les données publiques sur GitHub
+  // Public (noms, ordre, tags) → GitHub
   saveRemoteConfig();
 }
 
 function saveField(key, val) {
   config[key] = val;
-  if (key === 'ghToken' || key === 'pwHash') {
-    // Données privées → localStorage uniquement
-    try {
-      localStorage.setItem('portfolio-cfg', JSON.stringify({
-        pwHash:  config.pwHash,
-        ghToken: config.ghToken
-      }));
-    } catch {}
-  } else {
-    saveConfig();
-  }
+  saveConfig();
 }
 
 async function loadRemoteConfig() {
@@ -735,7 +726,7 @@ async function loadRemoteConfig() {
     );
     if (r.ok) {
       const data = await r.json();
-      config.hidden      = data.hidden      || {};
+      // hidden n'est pas dans le JSON public — chargé depuis localStorage uniquement
       config.order       = data.order       || [];
       config.customTags  = data.customTags  || {};
       config.customNames = data.customNames || {};
@@ -754,7 +745,6 @@ async function loadRemoteConfig() {
 async function saveRemoteConfig() {
   if (!config.ghToken) return; // Pas de token = lecture seule
   const publicConfig = {
-    hidden:      config.hidden,
     order:       config.order,
     customTags:  config.customTags,
     customNames: config.customNames

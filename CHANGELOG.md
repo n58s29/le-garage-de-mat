@@ -3,7 +3,8 @@
 Historique de toutes les modifications du projet. Généré automatiquement à chaque commit.
 
 ## 2026-04-05
-- Store public config in portfolio-config.json (visible to all visitors) (`4e34b0c`)
+- Keep hidden repos private (localStorage only, not in public JSON) (`3124b50`)
+- Store public config in portfolio-config.json (visible to all visitors) (`6b17232`)
 - Add custom display name per repo in admin panel (`95c14fe`)
 - Add repo thumbnail on cards and modal hero image (`5591c62`)
 - Refonte UX — Binary Obelisk design system (`6689333`)
