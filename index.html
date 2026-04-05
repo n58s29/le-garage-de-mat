@@ -630,7 +630,7 @@ const API = 'https://api.github.com';
 const DEFAULT_PW_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'; // "admin"
 
 let repos = [];
-let config = { hidden: {}, order: [], customTags: {}, pwHash: DEFAULT_PW_HASH, ghToken: '' };
+let config = { hidden: {}, order: [], customTags: {}, customNames: {}, pwHash: DEFAULT_PW_HASH, ghToken: '' };
 let adminAuthed = false;
 let readmeCache = {};
 let changelogCache = {};
@@ -833,7 +833,7 @@ function renderCards() {
       ${r.homepage ? '<div class="card-live" title="Site live"></div>' : ''}
       <img class="card-thumb" src="https://opengraph.githubassets.com/1/${GH_USER}/${escHtml(r.name)}" alt="${escHtml(r.name)}" loading="lazy">
       <div class="card-id">ID: ${id}_${escHtml(r.name.toUpperCase().replace(/-/g,'_').slice(0,12))}</div>
-      <div class="card-name">${escHtml(r.name)}</div>
+      <div class="card-name">${escHtml(config.customNames[r.name] || r.name)}</div>
       <div class="card-desc">${escHtml(r.description || 'Pas de description')}</div>
       <div class="tags">
         ${r.language ? `<span class="tag tag-lang">${escHtml(r.language)}</span>` : ''}
@@ -861,7 +861,7 @@ async function openModal(name) {
   heroImg.src = `https://opengraph.githubassets.com/1/${GH_USER}/${repo.name}`;
   heroImg.alt = repo.name;
 
-  document.getElementById('modal-title').textContent = repo.name;
+  document.getElementById('modal-title').textContent = config.customNames[repo.name] || repo.name;
 
   let role = repo.language || 'Projet';
   role += ` · ${timeAgo(repo.updated_at)}`;
@@ -994,6 +994,9 @@ function renderAdminList() {
         <div class="admin-row-name" style="opacity:${visible ? 1 : 0.35}">${escHtml(r.name)}</div>
         <div class="admin-row-desc">${escHtml(r.description || '—')}</div>
         ${visible ? `
+        <div class="admin-tags-row" style="margin-top:6px;margin-bottom:4px">
+          <input class="admin-tag-input" style="width:220px;font-size:0.72rem" placeholder="Nom affiché (ex: Le Garage de Mat)" value="${escHtml(config.customNames[r.name] || '')}" oninput="saveCustomName('${escHtml(r.name)}', this.value)">
+        </div>
         <div class="admin-tags-row">
           <input class="admin-tag-input" placeholder="+ tag" onkeydown="addCustomTag(event, '${escHtml(r.name)}')">
           ${customTags.map(t => `<span class="tag tag-custom tag-remove" onclick="removeCustomTag('${escHtml(r.name)}','${escHtml(t)}')">${escHtml(t)} ✕</span>`).join('')}
@@ -1041,6 +1044,12 @@ function moveRepo(name, dir) {
   config.order = order;
   saveConfig();
   renderAdminList();
+}
+
+function saveCustomName(repoName, val) {
+  if (val.trim()) config.customNames[repoName] = val.trim();
+  else delete config.customNames[repoName];
+  saveConfig();
 }
 
 function addCustomTag(e, repoName) {

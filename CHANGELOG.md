@@ -3,7 +3,8 @@
 Historique de toutes les modifications du projet. Généré automatiquement à chaque commit.
 
 ## 2026-04-05
-- Add repo thumbnail on cards and modal hero image (`87e6189`)
+- Add custom display name per repo in admin panel (`ebec51d`)
+- Add repo thumbnail on cards and modal hero image (`5591c62`)
 - Refonte UX — Binary Obelisk design system (`6689333`)
 - Add README and CHANGELOG (auto-generated) (`93e5bea`)
 - Delete projects.json (`71ec1fa`)
