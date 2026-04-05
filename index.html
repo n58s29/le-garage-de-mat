@@ -3,322 +3,976 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Le Garage de Mat</title>
+<title>n58s29 — Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ========== TOKENS ========== */
+/* ═══════════════════════════════════════════════════
+   DESIGN TOKENS — from DESIGN.md "The Technical Architect"
+   ═══════════════════════════════════════════════════ */
 :root {
-  --bg: #FAFAF8; --bg-card: #FFFFFF; --bg-el: #F3F2EE; --bg-overlay: rgba(0,0,0,.45);
-  --tx: #1A1A18; --tx2: #6B6A65; --tx3: #9C9B95;
-  --bd: #E5E4DF; --bd2: #D0CFC9;
-  --accent: #0057B8; --accent-bg: #E8F0FA;
-  --font-d: 'Space Mono', monospace; --font-b: 'DM Sans', sans-serif;
-  --r: 10px; --rs: 6px; --pill: 999px;
+  --surface: #0b1326;
+  --surf-low: #131b2e;
+  --surf-mid: #171f33;
+  --surf-high: #222a3d;
+  --surf-highest: #2a3349;
+  --primary: #bdc2ff;
+  --primary-ctr: #7c87f3;
+  --on-primary: #0b1326;
+  --on-surface: #e2e4ea;
+  --on-surf-var: #a0a6b8;
+  --secondary: #89ceff;
+  --tertiary: #4edea3;
+  --tertiary-ctr: rgba(78,222,163,0.12);
+  --outline-var: rgba(160,166,184,0.15);
+  --glass: rgba(42,51,73,0.4);
+  --tint: rgba(124,135,243,0.1);
+  --shadow-indigo: rgba(0,7,103,0.15);
 }
-[data-theme="dark"] {
-  --bg: #141413; --bg-card: #1E1E1C; --bg-el: #2A2A27; --bg-overlay: rgba(0,0,0,.65);
-  --tx: #EAEAE6; --tx2: #9C9B95; --tx3: #6B6A65;
-  --bd: #333330; --bd2: #4A4A45;
-  --accent: #5BA3E8; --accent-bg: #1A2A3D;
+
+/* ═══════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { color-scheme: dark; scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--surface);
+  color: var(--on-surface);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input { font-family: inherit; }
+
+.label {
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.7rem;
+  font-weight: 600;
 }
 
-/* ========== RESET ========== */
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:var(--font-b);background:var(--bg);color:var(--tx);line-height:1.6;transition:background .3s,color .3s}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
+/* ═══════════════════════════════════════════════════
+   NAVIGATION — Glassmorphism
+   ═══════════════════════════════════════════════════ */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  padding: 16px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(11,19,38,0.72);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--outline-var);
+}
+.nav-brand {
+  font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--primary), var(--primary-ctr));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.nav-links { display: flex; gap: 8px; align-items: center; }
+.nav-btn {
+  color: var(--on-surf-var); padding: 8px 14px; border-radius: 6px;
+  font-family: 'Space Grotesk', sans-serif; text-transform: uppercase;
+  letter-spacing: 0.05em; font-size: 0.72rem; font-weight: 600;
+  transition: color 0.25s, background 0.25s;
+}
+.nav-btn:hover { color: var(--on-surface); background: var(--glass); }
+.nav-btn.active { color: var(--primary); background: var(--tint); }
 
-/* ========== LAYOUT ========== */
-.container{max-width:980px;margin:0 auto;padding:0 24px}
+/* ═══════════════════════════════════════════════════
+   HERO — Editorial Asymmetry
+   ═══════════════════════════════════════════════════ */
+.hero {
+  padding: 96px 48px 48px;
+  max-width: 1200px; margin: 0 auto;
+}
+.hero-eyebrow {
+  font-family: 'Space Grotesk', sans-serif; text-transform: uppercase;
+  letter-spacing: 0.1em; font-size: 0.65rem; font-weight: 600;
+  color: var(--tertiary); margin-bottom: 16px;
+}
+.hero h1 {
+  font-size: 3.5rem; font-weight: 900; letter-spacing: -0.02em;
+  line-height: 1.05; margin-bottom: 20px;
+}
+.hero h1 .grad {
+  background: linear-gradient(135deg, var(--primary), var(--primary-ctr));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-desc {
+  font-size: 1.05rem; color: var(--on-surf-var);
+  max-width: 480px; line-height: 1.65; margin-left: 33%;
+}
 
-/* ========== HEADER ========== */
-header{padding:44px 0 32px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px}
-.brand h1{font-family:var(--font-d);font-size:26px;font-weight:700;letter-spacing:-.5px}
-.brand .tagline{font-size:14px;color:var(--tx2);margin-top:4px;max-width:480px}
-.header-actions{display:flex;align-items:center;gap:12px}
-.theme-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--bd);background:var(--bg-card);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:border-color .15s}
-.theme-btn:hover{border-color:var(--bd2)}
+/* ═══════════════════════════════════════════════════
+   STATS BAR
+   ═══════════════════════════════════════════════════ */
+.stats {
+  display: flex; gap: 40px; padding: 0 48px 32px;
+  max-width: 1200px; margin: 0 auto; flex-wrap: wrap;
+}
+.stat { display: flex; align-items: baseline; gap: 8px; }
+.stat-num { font-size: 1.9rem; font-weight: 800; color: var(--primary); }
+.stat-lbl { color: var(--on-surf-var); font-size: 0.75rem; font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase; letter-spacing: 0.06em; }
 
-/* ========== STATS ========== */
-.stats{display:flex;gap:8px;margin:0 0 28px;flex-wrap:wrap}
-.stat{display:flex;align-items:baseline;gap:5px;background:var(--bg-el);padding:7px 13px;border-radius:var(--pill);font-size:13px;color:var(--tx2)}
-.stat strong{font-size:15px;font-weight:600;color:var(--tx)}
+/* ═══════════════════════════════════════════════════
+   SEARCH
+   ═══════════════════════════════════════════════════ */
+.search-area {
+  padding: 0 48px 40px; max-width: 1200px; margin: 0 auto;
+  display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+}
+.search-wrap { position: relative; flex: 1; max-width: 420px; }
+.search-icon {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  color: var(--on-surf-var); font-size: 0.85rem; pointer-events: none;
+}
+.search-input {
+  width: 100%; padding: 13px 16px 13px 42px;
+  background: var(--surf-low); border: none;
+  border-bottom: 2px solid var(--outline-var);
+  color: var(--on-surface); font-size: 0.9rem; outline: none;
+  transition: border-color 0.3s, background 0.3s; border-radius: 0;
+}
+.search-input:focus { border-bottom-color: var(--primary); background: var(--surf-mid); }
+.search-input::placeholder { color: var(--on-surf-var); }
 
-/* ========== SEARCH ========== */
-.search-wrap{position:relative;margin-bottom:16px}
-.search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--tx3);pointer-events:none}
-.search-input{width:100%;padding:10px 16px 10px 40px;font-family:var(--font-b);font-size:14px;border:1px solid var(--bd);border-radius:var(--r);background:var(--bg-card);color:var(--tx);outline:none;transition:border-color .15s}
-.search-input::placeholder{color:var(--tx3)}
-.search-input:focus{border-color:var(--accent)}
+.filter-btn {
+  padding: 8px 14px; border-radius: 9999px;
+  font-family: 'Space Grotesk', sans-serif; text-transform: uppercase;
+  letter-spacing: 0.04em; font-size: 0.65rem; font-weight: 600;
+  color: var(--on-surf-var); background: var(--surf-low);
+  transition: all 0.25s;
+}
+.filter-btn:hover, .filter-btn.active { color: var(--tertiary); background: var(--tertiary-ctr); }
 
-/* ========== FILTERS ========== */
-.filter-row{margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.filter-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);min-width:50px}
-.pill{font-family:var(--font-b);font-size:12px;padding:4px 11px;border-radius:var(--pill);border:1px solid var(--bd);background:transparent;color:var(--tx2);cursor:pointer;transition:all .15s;white-space:nowrap}
-.pill:hover{border-color:var(--bd2);color:var(--tx)}
-.pill.on{background:var(--tx);color:var(--bg);border-color:transparent}
+/* ═══════════════════════════════════════════════════
+   PROJECT GRID — No-Line Rule
+   ═══════════════════════════════════════════════════ */
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px; padding: 0 48px 96px; max-width: 1200px; margin: 0 auto;
+}
 
-/* ========== DIVIDER + COUNT ========== */
-.divider{height:1px;background:var(--bd);margin:18px 0}
-.count{font-size:12px;color:var(--tx3);font-family:var(--font-d);margin-bottom:14px}
+/* ═══════════════════════════════════════════════════
+   PROJECT CARDS — Tonal Layering
+   ═══════════════════════════════════════════════════ */
+.card {
+  background: var(--surf-mid); border-radius: 14px; padding: 28px;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1), background 0.3s;
+  animation: cardIn 0.45s ease both;
+}
+.card:nth-child(2) { animation-delay: .04s; }
+.card:nth-child(3) { animation-delay: .08s; }
+.card:nth-child(4) { animation-delay: .12s; }
+.card:nth-child(5) { animation-delay: .16s; }
+.card:nth-child(6) { animation-delay: .20s; }
+.card:nth-child(7) { animation-delay: .24s; }
+.card:nth-child(8) { animation-delay: .28s; }
+.card:hover { transform: translateY(-5px); background: var(--surf-high); }
+.card-live {
+  position: absolute; top: 18px; right: 18px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--tertiary); box-shadow: 0 0 10px var(--tertiary);
+}
+.card-name { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
+.card-desc {
+  font-size: 0.85rem; color: var(--on-surf-var); line-height: 1.6; margin-bottom: 18px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.tag {
+  padding: 3px 10px; border-radius: 9999px;
+  font-family: 'Space Grotesk', sans-serif; text-transform: uppercase;
+  letter-spacing: 0.04em; font-size: 0.62rem; font-weight: 600;
+}
+.tag-lang { background: var(--tertiary-ctr); color: var(--tertiary); }
+.tag-topic { background: var(--tint); color: var(--primary); }
+.tag-custom { background: rgba(137,206,255,0.1); color: var(--secondary); }
+.card-foot {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.card-time { font-size: 0.7rem; color: var(--on-surf-var); }
+.card-stars {
+  display: flex; align-items: center; gap: 4px;
+  color: var(--primary); font-size: 0.75rem; font-weight: 600;
+}
 
-/* ========== GRID ========== */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;padding-bottom:60px}
+/* ═══════════════════════════════════════════════════
+   MODAL — Refined Sheet + Slide Up
+   ═══════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.55); backdrop-filter: blur(10px);
+  display: flex; justify-content: center; align-items: flex-end;
+  animation: fadeIn 0.2s ease;
+}
+.modal-overlay.hidden { display: none; }
+.modal {
+  width: 100%; max-width: 900px; max-height: 92vh;
+  background: var(--surf-high); border-radius: 20px 20px 0 0;
+  overflow-y: auto; padding: 44px;
+  animation: slideUp 0.4s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 -20px 40px var(--shadow-indigo);
+}
+.modal-close {
+  position: sticky; top: 0; float: right; z-index: 10;
+  background: var(--glass); backdrop-filter: blur(12px);
+  color: var(--on-surface); width: 36px; height: 36px;
+  border-radius: 50%; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-title { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; padding-right: 48px; }
+.modal-role {
+  color: var(--tertiary); font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  font-size: 0.72rem; font-weight: 600; margin-bottom: 24px;
+}
+.modal-role a { color: var(--tertiary); }
+.modal-role a:hover { text-decoration: underline; }
 
-/* ========== CARD ========== */
-.card{background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:border-color .2s,transform .2s}
-.card:hover{border-color:var(--bd2);transform:translateY(-2px)}
-.card-vis{height:140px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.card-vis .ico{font-size:30px;position:relative;z-index:1}
-.card-vis img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-.card-body{padding:12px 14px 14px}
-.card-top{display:flex;justify-content:space-between;align-items:start;gap:8px;margin-bottom:3px}
-.card-title{font-family:var(--font-d);font-size:13px;font-weight:700;letter-spacing:-.2px}
-.card-desc{font-size:12.5px;color:var(--tx2);line-height:1.5;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card-tags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px}
-.tag{font-size:10px;padding:2px 7px;border-radius:var(--pill);background:var(--bg-el);color:var(--tx2);font-weight:500}
-.card-foot{display:flex;align-items:center;justify-content:space-between;padding-top:7px;border-top:1px solid var(--bd)}
-.card-date{font-size:10px;color:var(--tx3)}
-.card-gh{font-size:10px;color:var(--accent);font-weight:500}
+/* Tabs */
+.tab-bar {
+  display: flex; gap: 2px; margin-bottom: 28px;
+  background: var(--surf-low); border-radius: 10px; padding: 3px;
+}
+.tab-btn {
+  flex: 1; padding: 10px; color: var(--on-surf-var);
+  font-family: 'Space Grotesk', sans-serif; text-transform: uppercase;
+  letter-spacing: 0.04em; font-size: 0.7rem; font-weight: 600;
+  border-radius: 8px; transition: all 0.2s;
+}
+.tab-btn:hover { color: var(--on-surface); }
+.tab-btn.active { background: var(--surf-mid); color: var(--primary); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
-/* ========== STATUS BADGES ========== */
-.st{font-size:9px;font-weight:600;padding:2px 7px;border-radius:var(--pill);white-space:nowrap;display:inline-flex;align-items:center;gap:3px}
-.st::before{content:'';width:5px;height:5px;border-radius:50%}
-.st-prod{background:#E7F5E8;color:#2D6A30}.st-prod::before{background:#3DA142}
-.st-mvp{background:#E0EDFC;color:#1A5AA0}.st-mvp::before{background:#3B8BD4}
-.st-proto{background:#FFF3DC;color:#8A5D10}.st-proto::before{background:#D49A20}
-.st-reflexion{background:#EEECFE;color:#5B4BBF}.st-reflexion::before{background:#7B6FD4}
-.st-archive{background:var(--bg-el);color:var(--tx3)}.st-archive::before{background:var(--tx3)}
-[data-theme="dark"] .st-prod{background:#1A3A1B;color:#7DD381}[data-theme="dark"] .st-prod::before{background:#5BBF60}
-[data-theme="dark"] .st-mvp{background:#152D4A;color:#7DB8E8}[data-theme="dark"] .st-mvp::before{background:#5BA3E8}
-[data-theme="dark"] .st-proto{background:#3A2C0E;color:#E8BA50}[data-theme="dark"] .st-proto::before{background:#D4A830}
-[data-theme="dark"] .st-reflexion{background:#2A254A;color:#A99FE0}[data-theme="dark"] .st-reflexion::before{background:#8B7FD4}
+/* README render */
+.md { color: var(--on-surf-var); line-height: 1.75; font-size: 0.9rem; }
+.md h1, .md h2, .md h3, .md h4 { color: var(--on-surface); margin: 24px 0 10px; font-weight: 700; }
+.md h1 { font-size: 1.5rem; } .md h2 { font-size: 1.25rem; } .md h3 { font-size: 1.1rem; }
+.md pre {
+  background: var(--surf-low); padding: 16px; border-radius: 8px;
+  overflow-x: auto; font-size: 0.8rem; margin: 14px 0;
+  font-family: 'Space Grotesk', monospace;
+}
+.md code { background: var(--surf-low); padding: 2px 6px; border-radius: 4px; font-size: 0.82rem; }
+.md a { color: var(--secondary); } .md a:hover { text-decoration: underline; }
+.md ul, .md ol { padding-left: 20px; margin: 10px 0; }
+.md li { margin: 4px 0; }
+.md img { max-width: 100%; border-radius: 8px; margin: 14px 0; }
+.md blockquote { border-left: 3px solid var(--primary-ctr); padding-left: 16px; color: var(--on-surf-var); margin: 14px 0; }
 
-/* ========== MODAL ========== */
-.modal-bg{position:fixed;inset:0;background:var(--bg-overlay);z-index:100;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px)}
-.modal-bg.open{display:flex}
-.modal{background:var(--bg-card);border:1px solid var(--bd);border-radius:12px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;position:relative}
-.modal-close{position:absolute;top:12px;right:14px;width:32px;height:32px;border-radius:50%;border:1px solid var(--bd);background:var(--bg-card);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--tx2);z-index:1}
-.modal-close:hover{border-color:var(--bd2);color:var(--tx)}
-.modal-vis{height:240px;display:flex;align-items:center;justify-content:center;border-radius:12px 12px 0 0;overflow:hidden;position:relative}
-.modal-vis .ico{font-size:48px;position:relative;z-index:1}
-.modal-vis img{width:100%;height:100%;object-fit:cover;object-position:top;position:absolute;inset:0}
-.modal-body{padding:24px}
-.modal-title{font-family:var(--font-d);font-size:20px;font-weight:700;margin-bottom:4px}
-.modal-status{margin-bottom:16px}
-.modal-section{margin-bottom:16px}
-.modal-section-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);margin-bottom:4px}
-.modal-section p{font-size:14px;color:var(--tx2);line-height:1.6}
-.modal-tags{display:flex;flex-wrap:wrap;gap:5px}
-.modal-tags .tag{font-size:12px;padding:4px 10px}
-.modal-meta{display:flex;gap:20px;font-size:13px;color:var(--tx2);padding-top:16px;border-top:1px solid var(--bd);margin-top:8px}
-.modal-meta a{font-weight:500}
+/* Info grid */
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.info-item-label { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase;
+  letter-spacing: 0.06em; font-size: 0.65rem; font-weight: 600; color: var(--on-surf-var); margin-bottom: 4px; }
+.info-item-val { font-weight: 600; font-size: 0.95rem; }
 
-/* ========== EMPTY ========== */
-.empty{text-align:center;padding:60px 20px;color:var(--tx3);display:none}
-.empty .e-ico{font-size:32px;margin-bottom:10px}
-.empty p{font-size:14px}
+/* Action btns */
+.modal-actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 22px; border-radius: 6px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-ctr));
+  color: var(--on-primary); font-weight: 600; font-size: 0.85rem;
+  transition: opacity 0.2s;
+}
+.btn-primary:hover { opacity: 0.88; }
+.btn-glass {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 22px; border-radius: 6px;
+  background: var(--glass); backdrop-filter: blur(12px);
+  color: var(--on-surface); font-weight: 500; font-size: 0.85rem;
+  transition: background 0.2s;
+}
+.btn-glass:hover { background: var(--surf-highest); }
 
-/* ========== FOOTER ========== */
-footer{text-align:center;padding:20px 0 40px;font-size:12px;color:var(--tx3)}
-footer a{color:var(--tx2)}
+/* ═══════════════════════════════════════════════════
+   ADMIN PANEL
+   ═══════════════════════════════════════════════════ */
+.admin { max-width: 900px; margin: 0 auto; padding: 48px; }
+.admin.hidden { display: none; }
+.admin-title { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+.admin-sub { color: var(--on-surf-var); margin-bottom: 36px; font-size: 0.9rem; }
+.admin-section { background: var(--surf-low); border-radius: 14px; padding: 28px; margin-bottom: 24px; }
+.admin-section-title {
+  font-family: 'Space Grotesk', sans-serif; text-transform: uppercase;
+  letter-spacing: 0.06em; font-size: 0.7rem; font-weight: 600;
+  color: var(--primary-ctr); margin-bottom: 18px;
+}
+.admin-hint { font-size: 0.78rem; color: var(--on-surf-var); margin-bottom: 14px; line-height: 1.5; }
+.admin-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--outline-var);
+}
+.admin-row:last-child { border-bottom: none; }
+.admin-row-info { flex: 1; min-width: 0; }
+.admin-row-name { font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.admin-row-desc { font-size: 0.73rem; color: var(--on-surf-var); margin-top: 2px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.admin-tags-row { margin-top: 8px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.admin-tag-input {
+  background: var(--surf-mid); border: none; border-bottom: 2px solid var(--outline-var);
+  color: var(--on-surface); padding: 6px 10px; font-size: 0.72rem; outline: none;
+  width: 160px; transition: border-color 0.3s;
+}
+.admin-tag-input:focus { border-bottom-color: var(--primary); }
+.tag-remove { cursor: pointer; }
+.tag-remove:hover { opacity: 0.7; }
+.admin-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+.order-btn {
+  background: var(--surf-mid); border: 1px solid var(--outline-var);
+  color: var(--on-surf-var); width: 28px; height: 28px; border-radius: 6px;
+  font-size: 0.75rem; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.order-btn:hover { background: var(--surf-high); color: var(--on-surface); }
+.toggle {
+  width: 44px; height: 24px; border-radius: 12px; position: relative;
+  transition: background 0.3s; flex-shrink: 0;
+}
+.toggle.on { background: var(--primary-ctr); } .toggle.off { background: var(--surf-highest); }
+.toggle::after {
+  content: ''; position: absolute; top: 3px; width: 18px; height: 18px;
+  border-radius: 50%; background: var(--on-surface); transition: left 0.3s;
+}
+.toggle.on::after { left: 23px; } .toggle.off::after { left: 3px; }
 
-/* ========== ANIM ========== */
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.admin-input {
+  background: var(--surf-mid); border: none; border-bottom: 2px solid var(--outline-var);
+  color: var(--on-surface); padding: 11px 14px; font-size: 0.85rem;
+  width: 100%; outline: none; transition: border-color 0.3s;
+}
+.admin-input:focus { border-bottom-color: var(--primary); }
+.admin-input-row { display: flex; gap: 12px; align-items: flex-end; }
 
-/* ========== RESPONSIVE ========== */
-@media(max-width:640px){
-  .grid{grid-template-columns:1fr}
-  header{flex-direction:column}
-  .modal{max-height:92vh;margin:8px}
+/* ═══════════════════════════════════════════════════
+   PASSWORD OVERLAY
+   ═══════════════════════════════════════════════════ */
+.pw-overlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(14px);
+  display: flex; align-items: center; justify-content: center;
+}
+.pw-overlay.hidden { display: none; }
+.pw-box {
+  background: var(--surf-high); border-radius: 18px;
+  padding: 44px; max-width: 380px; width: 90%; text-align: center;
+  box-shadow: 0 20px 40px var(--shadow-indigo);
+}
+.pw-box h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; }
+.pw-box p { color: var(--on-surf-var); font-size: 0.82rem; margin-bottom: 24px; }
+.pw-input {
+  width: 100%; padding: 13px; background: var(--surf-low); border: none;
+  border-bottom: 2px solid var(--outline-var); color: var(--on-surface);
+  font-size: 1rem; text-align: center; outline: none; margin-bottom: 8px;
+  transition: border-color 0.3s;
+}
+.pw-input:focus { border-bottom-color: var(--primary); }
+.pw-error { color: #ff6b6b; font-size: 0.78rem; margin-bottom: 12px; min-height: 1.2em; }
+
+/* ═══════════════════════════════════════════════════
+   STATES
+   ═══════════════════════════════════════════════════ */
+.loader {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; min-height: 55vh; gap: 20px;
+}
+.spinner {
+  width: 38px; height: 38px; border: 3px solid var(--surf-high);
+  border-top-color: var(--primary-ctr); border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+.loader-text { color: var(--on-surf-var); font-size: 0.88rem; }
+.error-box {
+  background: rgba(255,107,107,0.07); border-radius: 14px; padding: 28px; margin: 48px;
+  text-align: center; color: #ff6b6b;
+}
+.empty { text-align: center; padding: 96px 48px; color: var(--on-surf-var); }
+.empty-icon { font-size: 2.8rem; margin-bottom: 14px; opacity: 0.25; }
+
+/* ═══════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════ */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes cardIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2.3rem; }
+  .hero-desc { margin-left: 0; }
+  .hero, .search-area, .stats, .grid, .admin { padding-left: 20px; padding-right: 20px; }
+  .nav { padding: 12px 20px; }
+  .grid { grid-template-columns: 1fr; }
+  .modal { padding: 24px; }
+  .stats { gap: 20px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .admin-row { flex-wrap: wrap; }
 }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <header>
-    <div class="brand">
-      <h1>🔧 Le Garage de Mat</h1>
-      <div class="tagline">Chef de Projet Innovation · SNCF — Outils frugaux, IA générative, vibecoding & bricolage numérique.</div>
-    </div>
-    <div class="header-actions">
-      <button class="theme-btn" id="theme-toggle" title="Changer le thème">🌙</button>
-    </div>
-  </header>
+<!-- ════════════════ NAV ════════════════ -->
+<nav class="nav">
+  <div class="nav-brand">n58s29</div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showView('portfolio')" id="nav-portfolio">Portfolio</button>
+    <button class="nav-btn" onclick="requestAdmin()" id="nav-admin">⚙ Config</button>
+    <a href="https://github.com/n58s29" target="_blank" rel="noopener" class="nav-btn">GitHub ↗</a>
+  </div>
+</nav>
+
+<!-- ════════════════ PASSWORD OVERLAY ════════════════ -->
+<div class="pw-overlay hidden" id="pw-overlay" onclick="closePw()">
+  <div class="pw-box" onclick="event.stopPropagation()">
+    <h2>Admin</h2>
+    <p>Mot de passe requis pour la configuration</p>
+    <input class="pw-input" type="password" id="pw-input" placeholder="••••••" autofocus>
+    <div class="pw-error" id="pw-error"></div>
+    <button class="btn-primary" onclick="checkPw()" style="width:100%;justify-content:center">Accéder</button>
+  </div>
+</div>
+
+<!-- ════════════════ PORTFOLIO VIEW ════════════════ -->
+<div id="view-portfolio">
+  <section class="hero">
+    <div class="hero-eyebrow">Portfolio auto-généré depuis GitHub</div>
+    <h1>Projets &<br><span class="grad">Prototypes</span></h1>
+    <p class="hero-desc">Chaque repo est un terrain de jeu — outils frugaux, prototypes IA, apps terrain. Tout est open source.</p>
+  </section>
 
   <div class="stats" id="stats"></div>
 
-  <div class="search-wrap">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input class="search-input" type="text" id="search" placeholder="Rechercher un projet, une techno, un thème…" autocomplete="off">
+  <div class="search-area" id="search-area">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input class="search-input" id="search" placeholder="Rechercher un projet, langage, tag…" oninput="renderCards()">
+    </div>
+    <div id="lang-filters"></div>
   </div>
 
-  <div class="filter-row" id="status-row"><span class="filter-label">Statut</span></div>
-  <div class="filter-row" id="tag-row"><span class="filter-label">Thèmes</span></div>
-
-  <div class="divider"></div>
-  <div class="count" id="count"></div>
+  <div id="loading" class="loader">
+    <div class="spinner"></div>
+    <span class="loader-text">Chargement des repos GitHub…</span>
+  </div>
+  <div id="error-box" class="error-box" style="display:none"></div>
   <div class="grid" id="grid"></div>
-  <div class="empty" id="empty"><div class="e-ico">🔍</div><p>Aucun projet ne correspond.</p></div>
-
-  <footer>Le Garage de Mat — vibecoding depuis 2023 · <a href="admin.html">Admin</a></footer>
 </div>
 
-<!-- MODAL -->
-<div class="modal-bg" id="modal-bg">
-  <div class="modal" id="modal">
-    <button class="modal-close" id="modal-close">&times;</button>
-    <div class="modal-vis" id="m-vis"></div>
-    <div class="modal-body">
-      <div class="modal-title" id="m-title"></div>
-      <div class="modal-status" id="m-status"></div>
-      <div class="modal-section"><div class="modal-section-label">Description</div><p id="m-desc"></p></div>
-      <div class="modal-section"><div class="modal-section-label">Contexte</div><p id="m-ctx"></p></div>
-      <div class="modal-section"><div class="modal-section-label">Technologies & thèmes</div><div class="modal-tags" id="m-tags"></div></div>
-      <div class="modal-meta" id="m-meta"></div>
+<!-- ════════════════ ADMIN VIEW ════════════════ -->
+<div class="admin hidden" id="view-admin">
+  <div class="admin-title">Configuration</div>
+  <div class="admin-sub">Choisis les repos à afficher, réordonne-les, ajoute des tags custom.</div>
+
+  <div class="admin-section">
+    <div class="admin-section-title">Token GitHub (optionnel)</div>
+    <p class="admin-hint">Augmente la limite API de 60 à 5 000 req/h. Crée un token sur github.com/settings/tokens (scope : public_repo).</p>
+    <input class="admin-input" type="password" id="cfg-token" placeholder="ghp_xxxx…" oninput="saveField('ghToken', this.value)">
+  </div>
+
+  <div class="admin-section">
+    <div class="admin-section-title">Mot de passe admin</div>
+    <div class="admin-input-row">
+      <input class="admin-input" type="password" id="cfg-newpw" placeholder="Nouveau mot de passe" style="max-width:320px">
+      <button class="btn-glass" onclick="changePassword()">Enregistrer</button>
     </div>
+  </div>
+
+  <div class="admin-section">
+    <div class="admin-section-title" id="admin-repos-title">Repos</div>
+    <div id="admin-list"></div>
+  </div>
+</div>
+
+<!-- ════════════════ MODAL ════════════════ -->
+<div class="modal-overlay hidden" id="modal-overlay" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-role" id="modal-role"></div>
+    <div class="tags" id="modal-tags"></div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('readme', this)">README</button>
+      <button class="tab-btn" onclick="switchTab('changelog', this)">Changelog</button>
+      <button class="tab-btn" onclick="switchTab('info', this)">Infos</button>
+    </div>
+    <div class="tab-content active" id="tab-readme"></div>
+    <div class="tab-content" id="tab-changelog"></div>
+    <div class="tab-content" id="tab-info"></div>
+    <div class="modal-actions" id="modal-actions"></div>
   </div>
 </div>
 
 <script>
-/* ========== SANITIZE ========== */
-function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+/* ═══════════════════════════════════════════════════
+   CORE STATE
+   ═══════════════════════════════════════════════════ */
+const GH_USER = 'n58s29';
+const API = 'https://api.github.com';
+const DEFAULT_PW_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'; // "admin"
 
-/* ========== THEME ========== */
-const html=document.documentElement, tog=document.getElementById('theme-toggle');
-let theme=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
-function applyTheme(){html.dataset.theme=theme;tog.textContent=theme==='dark'?'☀️':'🌙';localStorage.setItem('theme',theme)}
-tog.onclick=()=>{theme=theme==='dark'?'light':'dark';applyTheme()};
-applyTheme();
+let repos = [];
+let config = { hidden: {}, order: [], customTags: {}, pwHash: DEFAULT_PW_HASH, ghToken: '' };
+let adminAuthed = false;
+let readmeCache = {};
+let changelogCache = {};
+let activeLangFilter = null;
 
-/* ========== DATA ========== */
-let PROJECTS=[];
-const STATUSES=[{k:'all',l:'Tous'},{k:'prod',l:'En prod'},{k:'mvp',l:'MVP'},{k:'proto',l:'Proto'},{k:'reflexion',l:'Réflexion'},{k:'archive',l:'Archivé'}];
-const STATUS_MAP={prod:{l:'En prod',c:'st-prod'},mvp:{l:'MVP',c:'st-mvp'},proto:{l:'Proto',c:'st-proto'},reflexion:{l:'Réflexion',c:'st-reflexion'},archive:{l:'Archivé',c:'st-archive'}};
-let activeStatus='all', activeTags=new Set();
+/* ═══════════════════════════════════════════════════
+   UTILS
+   ═══════════════════════════════════════════════════ */
+async function sha256(msg) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
-async function loadData(){
-  try{
-    const r=await fetch('projects.json?v='+Date.now());
-    const d=await r.json();
-    PROJECTS=d.projects||[];
-  }catch(e){
-    console.error('Failed to load projects.json',e);
-    PROJECTS=[];
+function timeAgo(d) {
+  const s = Math.floor((Date.now() - new Date(d)) / 1000);
+  if (s < 60) return "à l'instant";
+  if (s < 3600) return `il y a ${Math.floor(s/60)} min`;
+  if (s < 86400) return `il y a ${Math.floor(s/3600)}h`;
+  if (s < 2592000) return `il y a ${Math.floor(s/86400)}j`;
+  return new Date(d).toLocaleDateString('fr-FR', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function renderMd(md, fullName) {
+  if (!md) return '';
+  const rawBase = `https://raw.githubusercontent.com/${fullName}/main/`;
+  return md
+    .replace(/```([\w]*)\n([\s\S]*?)```/g, (_, lang, code) =>
+      `<pre class="md-pre">${escHtml(code)}</pre>`)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/^#### (.+)$/gm, '<h4>$1</h4>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, '<em>$1</em>')
+    .replace(/^>\s*(.+)$/gm, '<blockquote>$1</blockquote>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
+      const url = src.startsWith('http') ? src : rawBase + src.replace(/^\.?\/?/, '');
+      return `<img src="${url}" alt="${escHtml(alt)}">`;
+    })
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/^\- (.+)$/gm, '<li>$1</li>')
+    .replace(/^\* (.+)$/gm, '<li>$1</li>')
+    .replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>')
+    .replace(/(<li>[\s\S]*?<\/li>(\n|$))+/g, m => `<ul>${m}</ul>`)
+    .replace(/\n{2,}/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+}
+
+/* ═══════════════════════════════════════════════════
+   CONFIG PERSISTENCE (localStorage)
+   ═══════════════════════════════════════════════════ */
+function loadConfig() {
+  try {
+    const s = localStorage.getItem('portfolio-cfg');
+    if (s) config = { ...config, ...JSON.parse(s) };
+  } catch {}
+}
+
+function saveConfig() {
+  try { localStorage.setItem('portfolio-cfg', JSON.stringify(config)); } catch {}
+}
+
+function saveField(key, val) {
+  config[key] = val;
+  saveConfig();
+}
+
+/* ═══════════════════════════════════════════════════
+   GITHUB API
+   ═══════════════════════════════════════════════════ */
+function ghHeaders(extra) {
+  const h = { ...extra };
+  if (config.ghToken) h['Authorization'] = `token ${config.ghToken}`;
+  return h;
+}
+
+async function fetchRepos() {
+  try {
+    const r = await fetch(`${API}/users/${GH_USER}/repos?per_page=100&sort=updated`, { headers: ghHeaders() });
+    if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+    repos = await r.json();
+    document.getElementById('loading').style.display = 'none';
+    renderStats();
+    renderLangFilters();
+    renderCards();
+    renderAdminList();
+  } catch (e) {
+    document.getElementById('loading').style.display = 'none';
+    const box = document.getElementById('error-box');
+    box.style.display = 'block';
+    box.innerHTML = `<div style="font-size:1.4rem;margin-bottom:8px">⚠</div>
+      <div>Erreur API GitHub : ${escHtml(e.message)}</div>
+      <div style="margin-top:10px;font-size:0.78rem;color:var(--on-surf-var)">
+        Ajoute un token GitHub dans Config admin pour augmenter la limite de requêtes.</div>`;
   }
-  init();
 }
 
-function init(){
-  // Stats
-  const counts={};PROJECTS.forEach(p=>{counts[p.status]=(counts[p.status]||0)+1});
-  document.getElementById('stats').innerHTML=
-    `<div class="stat"><strong>${PROJECTS.length}</strong> projets</div>`+
-    `<div class="stat"><strong>${counts.prod||0}</strong> en prod</div>`+
-    `<div class="stat"><strong>${counts.mvp||0}</strong> MVP</div>`+
-    `<div class="stat"><strong>${counts.proto||0}</strong> proto</div>`;
-
-  // Status pills
-  const sr=document.getElementById('status-row');
-  STATUSES.forEach(s=>{
-    const b=document.createElement('button');b.className='pill'+(s.k==='all'?' on':'');b.textContent=s.l;
-    b.onclick=()=>{activeStatus=s.k;sr.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));b.classList.add('on');render()};
-    sr.appendChild(b);
-  });
-
-  // Tag pills
-  const allTags=[...new Set(PROJECTS.flatMap(p=>p.tags))].sort();
-  const tr=document.getElementById('tag-row');
-  allTags.forEach(t=>{
-    const b=document.createElement('button');b.className='pill';b.textContent=t;
-    b.onclick=()=>{if(activeTags.has(t)){activeTags.delete(t);b.classList.remove('on')}else{activeTags.add(t);b.classList.add('on')}render()};
-    tr.appendChild(b);
-  });
-
-  document.getElementById('search').addEventListener('input',render);
-  render();
+async function fetchReadme(repo) {
+  if (readmeCache[repo.name]) return readmeCache[repo.name];
+  try {
+    const r = await fetch(`${API}/repos/${repo.full_name}/readme`, {
+      headers: ghHeaders({ Accept: 'application/vnd.github.v3.raw' })
+    });
+    if (r.ok) { readmeCache[repo.name] = await r.text(); return readmeCache[repo.name]; }
+  } catch {}
+  return null;
 }
 
-function render(){
-  const q=document.getElementById('search').value.toLowerCase().trim();
-  const list=PROJECTS.filter(p=>{
-    if(activeStatus!=='all'&&p.status!==activeStatus)return false;
-    if(activeTags.size>0&&!p.tags.some(t=>activeTags.has(t)))return false;
-    if(q){const h=(p.title+' '+p.desc+' '+p.context+' '+p.tags.join(' ')).toLowerCase();return q.split(/\s+/).every(w=>h.includes(w))}
-    return true;
-  });
+async function fetchChangelog(repo) {
+  if (changelogCache[repo.name] !== undefined) return changelogCache[repo.name];
+  try {
+    const r = await fetch(`${API}/repos/${repo.full_name}/contents/CHANGELOG.md`, {
+      headers: ghHeaders({ Accept: 'application/vnd.github.v3.raw' })
+    });
+    if (r.ok) { changelogCache[repo.name] = await r.text(); return changelogCache[repo.name]; }
+  } catch {}
+  changelogCache[repo.name] = null;
+  return null;
+}
 
-  document.getElementById('count').textContent=list.length+' projet'+(list.length!==1?'s':'');
-  const grid=document.getElementById('grid'), empty=document.getElementById('empty');
+/* ═══════════════════════════════════════════════════
+   VISIBLE REPOS (sorted + filtered)
+   ═══════════════════════════════════════════════════ */
+function getVisibleRepos() {
+  let list = repos.filter(r => !config.hidden[r.name]);
 
-  if(!list.length){grid.innerHTML='';empty.style.display='block';return}
-  empty.style.display='none';
+  // Custom order
+  if (config.order && config.order.length) {
+    const om = {};
+    config.order.forEach((n, i) => om[n] = i);
+    list.sort((a, b) => {
+      const oa = om[a.name] ?? 9999, ob = om[b.name] ?? 9999;
+      if (oa !== ob) return oa - ob;
+      return new Date(b.updated_at) - new Date(a.updated_at);
+    });
+  }
 
-  grid.innerHTML=list.map((p,i)=>{
-    const sm=STATUS_MAP[p.status]||{l:'?',c:''};
-    return `<div class="card" style="animation:fadeUp .3s ease both;animation-delay:${i*35}ms" data-id="${esc(p.id)}">
-      <div class="card-vis" style="background:${ p.screenshot ? 'var(--bg-el)' : '#'+hashColor(p.title) }">
-        ${ p.screenshot ? `<img src="${esc(p.screenshot)}" alt="${esc(p.title)}" loading="lazy">` : `<span class="ico">${esc(p.icon)}</span>` }
+  // Search
+  const q = (document.getElementById('search')?.value || '').toLowerCase().trim();
+  if (q) {
+    list = list.filter(r =>
+      r.name.toLowerCase().includes(q) ||
+      (r.description || '').toLowerCase().includes(q) ||
+      (r.language || '').toLowerCase().includes(q) ||
+      (r.topics || []).some(t => t.includes(q)) ||
+      (config.customTags[r.name] || []).some(t => t.toLowerCase().includes(q))
+    );
+  }
+
+  // Language filter
+  if (activeLangFilter) {
+    list = list.filter(r => r.language === activeLangFilter);
+  }
+
+  return list;
+}
+
+/* ═══════════════════════════════════════════════════
+   RENDER — Portfolio
+   ═══════════════════════════════════════════════════ */
+function renderStats() {
+  const visible = getVisibleRepos();
+  const langs = [...new Set(visible.map(r => r.language).filter(Boolean))];
+  const stars = visible.reduce((s, r) => s + (r.stargazers_count || 0), 0);
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><span class="stat-num">${visible.length}</span><span class="stat-lbl">projets</span></div>
+    <div class="stat"><span class="stat-num">${langs.length}</span><span class="stat-lbl">langages</span></div>
+    <div class="stat"><span class="stat-num">${stars}</span><span class="stat-lbl">★ stars</span></div>`;
+}
+
+function renderLangFilters() {
+  const langs = [...new Set(repos.filter(r => !config.hidden[r.name]).map(r => r.language).filter(Boolean))].sort();
+  document.getElementById('lang-filters').innerHTML = langs.map(l =>
+    `<button class="filter-btn ${activeLangFilter === l ? 'active' : ''}" onclick="toggleLang('${escHtml(l)}')">${escHtml(l)}</button>`
+  ).join('');
+}
+
+function toggleLang(l) {
+  activeLangFilter = activeLangFilter === l ? null : l;
+  renderLangFilters();
+  renderCards();
+  renderStats();
+}
+
+function renderCards() {
+  const list = getVisibleRepos();
+  const grid = document.getElementById('grid');
+
+  if (!list.length) {
+    grid.innerHTML = '<div class="empty"><div class="empty-icon">📂</div><div>Aucun projet trouvé</div></div>';
+    renderStats();
+    return;
+  }
+
+  grid.innerHTML = list.map((r, i) => {
+    const customTags = config.customTags[r.name] || [];
+    return `
+    <div class="card" onclick="openModal('${escHtml(r.name)}')" style="animation-delay:${Math.min(i * 0.04, 0.32).toFixed(2)}s">
+      ${r.homepage ? '<div class="card-live" title="Site live"></div>' : ''}
+      <div class="card-name">${escHtml(r.name)}</div>
+      <div class="card-desc">${escHtml(r.description || 'Pas de description')}</div>
+      <div class="tags">
+        ${r.language ? `<span class="tag tag-lang">${escHtml(r.language)}</span>` : ''}
+        ${(r.topics || []).slice(0, 4).map(t => `<span class="tag tag-topic">${escHtml(t)}</span>`).join('')}
+        ${customTags.map(t => `<span class="tag tag-custom">${escHtml(t)}</span>`).join('')}
       </div>
-      <div class="card-body">
-        <div class="card-top">
-          <span class="card-title">${esc(p.title)}</span>
-          <span class="st ${sm.c}">${esc(sm.l)}</span>
-        </div>
-        <div class="card-desc">${esc(p.desc)}</div>
-        <div class="card-tags">${p.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
-        <div class="card-foot">
-          <span class="card-date">${esc(p.date)}</span>
-          ${p.github?`<span class="card-gh">GitHub ↗</span>`:''}
-        </div>
+      <div class="card-foot">
+        <span class="card-time">${timeAgo(r.updated_at)}</span>
+        ${r.stargazers_count ? `<span class="card-stars">★ ${r.stargazers_count}</span>` : ''}
       </div>
     </div>`;
   }).join('');
 
-  // Card click → modal
-  grid.querySelectorAll('.card').forEach(c=>{
-    c.addEventListener('click',()=>{
-      const p=PROJECTS.find(x=>x.id===c.dataset.id);
-      if(p)openModal(p);
-    });
-  });
+  renderStats();
 }
 
-/* ========== COLOR HASH ========== */
-const PALETTE=['D6E8F8','E3E0FA','D8EDDA','FBE9C8','FBD9D9','F5DAEB','D4F0E6','E8F0FA','FFF3DC','EEECFE'];
-function hashColor(s){let h=0;for(let i=0;i<s.length;i++)h=s.charCodeAt(i)+((h<<5)-h);return PALETTE[Math.abs(h)%PALETTE.length]}
+/* ═══════════════════════════════════════════════════
+   MODAL
+   ═══════════════════════════════════════════════════ */
+async function openModal(name) {
+  const repo = repos.find(r => r.name === name);
+  if (!repo) return;
 
-/* ========== MODAL ========== */
-const modalBg=document.getElementById('modal-bg');
-function openModal(p){
-  const sm=STATUS_MAP[p.status]||{l:'?',c:''};
-  const vis=document.getElementById('m-vis');
-  vis.style.background='#'+hashColor(p.title);
-  if(p.screenshot){
-    vis.innerHTML=`<img src="${esc(p.screenshot)}" alt="${esc(p.title)}">`;
-  }else{
-    vis.innerHTML=`<span class="ico">${esc(p.icon)}</span>`;
+  document.getElementById('modal-title').textContent = repo.name;
+
+  let role = repo.language || 'Projet';
+  role += ` · ${timeAgo(repo.updated_at)}`;
+  if (repo.homepage) role += ` · <a href="${repo.homepage}" target="_blank" rel="noopener">Live ↗</a>`;
+  document.getElementById('modal-role').innerHTML = role;
+
+  // Tags
+  const customTags = config.customTags[repo.name] || [];
+  document.getElementById('modal-tags').innerHTML =
+    (repo.topics || []).map(t => `<span class="tag tag-topic">${escHtml(t)}</span>`).join('') +
+    customTags.map(t => `<span class="tag tag-custom">${escHtml(t)}</span>`).join('');
+
+  // Actions
+  let acts = `<a href="${repo.html_url}" target="_blank" rel="noopener" class="btn-primary">Voir sur GitHub ↗</a>`;
+  if (repo.homepage) acts += `<a href="${repo.homepage}" target="_blank" rel="noopener" class="btn-glass">Site live ↗</a>`;
+  document.getElementById('modal-actions').innerHTML = acts;
+
+  // Tabs: reset
+  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+  document.querySelectorAll('.tab-content').forEach((c, i) => c.classList.toggle('active', i === 0));
+
+  // README
+  const tabReadme = document.getElementById('tab-readme');
+  tabReadme.innerHTML = '<div style="color:var(--on-surf-var);font-style:italic">Chargement du README…</div>';
+  const readme = await fetchReadme(repo);
+  tabReadme.innerHTML = readme
+    ? `<div class="md">${renderMd(readme, repo.full_name)}</div>`
+    : '<div style="color:var(--on-surf-var)">Pas de README.md dans ce repo.</div>';
+
+  // Changelog
+  const tabCl = document.getElementById('tab-changelog');
+  tabCl.innerHTML = '<div style="color:var(--on-surf-var);font-style:italic">Chargement…</div>';
+  const cl = await fetchChangelog(repo);
+  tabCl.innerHTML = cl
+    ? `<div class="md">${renderMd(cl, repo.full_name)}</div>`
+    : '<div style="color:var(--on-surf-var)">Pas de CHANGELOG.md dans ce repo.</div>';
+
+  // Info
+  const infos = [
+    ['Langage', repo.language || '—'],
+    ['Taille', `${(repo.size / 1024).toFixed(1)} MB`],
+    ['Stars', repo.stargazers_count],
+    ['Forks', repo.forks_count],
+    ['Issues ouvertes', repo.open_issues_count],
+    ['Branche par défaut', repo.default_branch],
+    ['Créé le', new Date(repo.created_at).toLocaleDateString('fr-FR')],
+    ['Dernière MAJ', new Date(repo.updated_at).toLocaleDateString('fr-FR')],
+    ['Licence', repo.license?.name || '—'],
+    ['Visibilité', repo.private ? 'Privé' : 'Public'],
+  ];
+  document.getElementById('tab-info').innerHTML = `<div class="info-grid">${
+    infos.map(([l, v]) => `<div><div class="info-item-label">${l}</div><div class="info-item-val">${escHtml(String(v))}</div></div>`).join('')
+  }</div>`;
+
+  document.getElementById('modal-overlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════════
+   VIEWS
+   ═══════════════════════════════════════════════════ */
+function showView(v) {
+  document.getElementById('view-portfolio').style.display = v === 'portfolio' ? '' : 'none';
+  document.getElementById('view-admin').classList.toggle('hidden', v !== 'admin');
+  document.getElementById('nav-portfolio').classList.toggle('active', v === 'portfolio');
+  document.getElementById('nav-admin').classList.toggle('active', v === 'admin');
+  if (v === 'portfolio') { renderCards(); renderLangFilters(); }
+  if (v === 'admin') renderAdminList();
+}
+
+/* ═══════════════════════════════════════════════════
+   ADMIN AUTH
+   ═══════════════════════════════════════════════════ */
+function requestAdmin() {
+  if (adminAuthed) { showView('admin'); return; }
+  document.getElementById('pw-overlay').classList.remove('hidden');
+  document.getElementById('pw-input').value = '';
+  document.getElementById('pw-error').textContent = '';
+  setTimeout(() => document.getElementById('pw-input').focus(), 100);
+}
+
+function closePw() {
+  document.getElementById('pw-overlay').classList.add('hidden');
+}
+
+async function checkPw() {
+  const val = document.getElementById('pw-input').value;
+  const hash = await sha256(val);
+  if (hash === (config.pwHash || DEFAULT_PW_HASH)) {
+    adminAuthed = true;
+    closePw();
+    showView('admin');
+    document.getElementById('cfg-token').value = config.ghToken || '';
+  } else {
+    document.getElementById('pw-error').textContent = 'Mot de passe incorrect';
   }
-  document.getElementById('m-title').textContent=p.title;
-  document.getElementById('m-status').innerHTML=`<span class="st ${sm.c}">${esc(sm.l)}</span>`;
-  document.getElementById('m-desc').textContent=p.desc;
-  document.getElementById('m-ctx').textContent=p.context||'Pas de contexte renseigné.';
-  document.getElementById('m-tags').innerHTML=p.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('');
-  let meta=`<span>📅 ${esc(p.date)}</span>`;
-  if(p.github)meta+=`<a href="${esc(p.github)}" target="_blank" rel="noopener">GitHub ↗</a>`;
-  document.getElementById('m-meta').innerHTML=meta;
-  modalBg.classList.add('open');
-  document.body.style.overflow='hidden';
 }
-function closeModal(){modalBg.classList.remove('open');document.body.style.overflow=''}
-document.getElementById('modal-close').onclick=closeModal;
-modalBg.addEventListener('click',e=>{if(e.target===modalBg)closeModal()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 
-/* ========== LOAD ========== */
-loadData();
+async function changePassword() {
+  const v = document.getElementById('cfg-newpw').value;
+  if (v.length < 3) return;
+  config.pwHash = await sha256(v);
+  saveConfig();
+  document.getElementById('cfg-newpw').value = '';
+}
+
+// Enter key on pw input
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') checkPw(); });
+});
+
+/* ═══════════════════════════════════════════════════
+   ADMIN — Repo List
+   ═══════════════════════════════════════════════════ */
+function renderAdminList() {
+  const sortedRepos = getSortedAllRepos();
+  document.getElementById('admin-repos-title').textContent = `Repos (${repos.length})`;
+
+  document.getElementById('admin-list').innerHTML = sortedRepos.map(r => {
+    const visible = !config.hidden[r.name];
+    const customTags = config.customTags[r.name] || [];
+    return `
+    <div class="admin-row">
+      <div class="admin-row-info">
+        <div class="admin-row-name" style="opacity:${visible ? 1 : 0.4}">${escHtml(r.name)}</div>
+        <div class="admin-row-desc">${escHtml(r.description || '—')}</div>
+        ${visible ? `
+        <div class="admin-tags-row">
+          <input class="admin-tag-input" placeholder="+ tag" onkeydown="addCustomTag(event, '${escHtml(r.name)}')">
+          ${customTags.map(t => `<span class="tag tag-custom tag-remove" onclick="removeCustomTag('${escHtml(r.name)}','${escHtml(t)}')">${escHtml(t)} ✕</span>`).join('')}
+        </div>` : ''}
+      </div>
+      <div class="admin-actions">
+        <button class="order-btn" title="Monter" onclick="moveRepo('${escHtml(r.name)}', -1)">↑</button>
+        <button class="order-btn" title="Descendre" onclick="moveRepo('${escHtml(r.name)}', 1)">↓</button>
+        <button class="toggle ${visible ? 'on' : 'off'}" onclick="toggleVisibility('${escHtml(r.name)}')"></button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function getSortedAllRepos() {
+  let list = [...repos];
+  if (config.order && config.order.length) {
+    const om = {};
+    config.order.forEach((n, i) => om[n] = i);
+    list.sort((a, b) => {
+      const oa = om[a.name] ?? 9999, ob = om[b.name] ?? 9999;
+      if (oa !== ob) return oa - ob;
+      return new Date(b.updated_at) - new Date(a.updated_at);
+    });
+  }
+  return list;
+}
+
+function toggleVisibility(name) {
+  config.hidden[name] = !config.hidden[name];
+  if (!config.hidden[name]) delete config.hidden[name];
+  saveConfig();
+  renderAdminList();
+}
+
+function moveRepo(name, dir) {
+  const allNames = getSortedAllRepos().map(r => r.name);
+  const order = config.order && config.order.length ? [...config.order] : [...allNames];
+  // ensure all are present
+  allNames.forEach(n => { if (!order.includes(n)) order.push(n); });
+  const idx = order.indexOf(name);
+  if (idx < 0) return;
+  const ni = idx + dir;
+  if (ni < 0 || ni >= order.length) return;
+  [order[idx], order[ni]] = [order[ni], order[idx]];
+  config.order = order;
+  saveConfig();
+  renderAdminList();
+}
+
+function addCustomTag(e, repoName) {
+  if (e.key !== 'Enter') return;
+  const tag = e.target.value.trim();
+  if (!tag) return;
+  if (!config.customTags[repoName]) config.customTags[repoName] = [];
+  if (!config.customTags[repoName].includes(tag)) config.customTags[repoName].push(tag);
+  saveConfig();
+  e.target.value = '';
+  renderAdminList();
+}
+
+function removeCustomTag(repoName, tag) {
+  if (!config.customTags[repoName]) return;
+  config.customTags[repoName] = config.customTags[repoName].filter(t => t !== tag);
+  saveConfig();
+  renderAdminList();
+}
+
+/* ═══════════════════════════════════════════════════
+   KEYBOARD SHORTCUTS
+   ═══════════════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (!document.getElementById('modal-overlay').classList.contains('hidden')) closeModal();
+    else if (!document.getElementById('pw-overlay').classList.contains('hidden')) closePw();
+  }
+});
+
+/* ═══════════════════════════════════════════════════
+   BOOT
+   ═══════════════════════════════════════════════════ */
+loadConfig();
+fetchRepos();
 </script>
 </body>
 </html>
