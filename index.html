@@ -243,6 +243,15 @@ body::before {
 .tag-topic { border-color: rgba(138,43,226,0.45); color: var(--sec-bright); }
 .tag-custom{ border-color: rgba(255,255,255,0.15); color: var(--on-surf-var); }
 
+.card-thumb {
+  width: calc(100% + 56px); margin: -24px -28px 20px;
+  height: 160px; object-fit: cover;
+  display: block; filter: grayscale(40%) brightness(0.85);
+  border-bottom: 2px solid var(--outline-var);
+  transition: filter 0.3s;
+}
+.card:hover .card-thumb { filter: grayscale(0%) brightness(1); }
+
 .card-foot {
   display: flex; justify-content: space-between; align-items: center;
   border-top: 2px solid var(--outline-var); padding-top: 12px; margin-top: 4px;
@@ -277,6 +286,13 @@ body::before {
   transition: border-color 0.15s, color 0.15s;
 }
 .modal-close:hover { border-color: var(--primary); color: var(--primary); }
+.modal-hero-img {
+  width: calc(100% + 88px); margin: -44px -44px 36px;
+  height: 280px; object-fit: cover; display: block;
+  border-bottom: 2px solid var(--primary);
+  filter: brightness(0.9);
+}
+
 .modal-title {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em;
@@ -589,6 +605,7 @@ body::before {
 <div class="modal-overlay hidden" id="modal-overlay" onclick="closeModal()">
   <div class="modal" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal()">✕</button>
+    <img class="modal-hero-img" id="modal-hero-img" src="" alt="">
     <div class="modal-title" id="modal-title"></div>
     <div class="modal-role" id="modal-role"></div>
     <div class="tags" id="modal-tags"></div>
@@ -814,6 +831,7 @@ function renderCards() {
     return `
     <div class="card" onclick="openModal('${escHtml(r.name)}')" style="animation-delay:${Math.min(i * 0.04, 0.32).toFixed(2)}s">
       ${r.homepage ? '<div class="card-live" title="Site live"></div>' : ''}
+      <img class="card-thumb" src="https://opengraph.githubassets.com/1/${GH_USER}/${escHtml(r.name)}" alt="${escHtml(r.name)}" loading="lazy">
       <div class="card-id">ID: ${id}_${escHtml(r.name.toUpperCase().replace(/-/g,'_').slice(0,12))}</div>
       <div class="card-name">${escHtml(r.name)}</div>
       <div class="card-desc">${escHtml(r.description || 'Pas de description')}</div>
@@ -838,6 +856,10 @@ function renderCards() {
 async function openModal(name) {
   const repo = repos.find(r => r.name === name);
   if (!repo) return;
+
+  const heroImg = document.getElementById('modal-hero-img');
+  heroImg.src = `https://opengraph.githubassets.com/1/${GH_USER}/${repo.name}`;
+  heroImg.alt = repo.name;
 
   document.getElementById('modal-title').textContent = repo.name;
 

@@ -3,7 +3,8 @@
 Historique de toutes les modifications du projet. Généré automatiquement à chaque commit.
 
 ## 2026-04-05
-- Refonte UX — Binary Obelisk design system (`2c27389`)
+- Add repo thumbnail on cards and modal hero image (`87e6189`)
+- Refonte UX — Binary Obelisk design system (`6689333`)
 - Add README and CHANGELOG (auto-generated) (`93e5bea`)
 - Delete projects.json (`71ec1fa`)
 - Delete admin.html (`f015fbb`)
