@@ -626,6 +626,7 @@ body::before {
    CORE STATE
    ═══════════════════════════════════════════════════ */
 const GH_USER = 'n58s29';
+const REPO_NAME = 'le-garage-de-mat';
 const API = 'https://api.github.com';
 const DEFAULT_PW_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'; // "admin"
 
@@ -635,6 +636,7 @@ let adminAuthed = false;
 let readmeCache = {};
 let changelogCache = {};
 let activeLangFilter = null;
+let remoteConfigSha = null;
 
 /* ═══════════════════════════════════════════════════
    UTILS
@@ -683,23 +685,92 @@ function renderMd(md, fullName) {
 }
 
 /* ═══════════════════════════════════════════════════
-   CONFIG PERSISTENCE (localStorage)
+   CONFIG PERSISTENCE
+   localStorage = token + mot de passe (privé)
+   portfolio-config.json = noms, ordre, tags (public)
    ═══════════════════════════════════════════════════ */
 function loadConfig() {
   try {
     const s = localStorage.getItem('portfolio-cfg');
-    if (s) config = { ...config, ...JSON.parse(s) };
+    if (s) {
+      const local = JSON.parse(s);
+      // Seules les données privées viennent du localStorage
+      if (local.pwHash)  config.pwHash  = local.pwHash;
+      if (local.ghToken) config.ghToken = local.ghToken;
+    }
   } catch {}
 }
 
 function saveConfig() {
-  try { localStorage.setItem('portfolio-cfg', JSON.stringify(config)); } catch {}
+  try {
+    // Sauvegarder uniquement les données privées en local
+    localStorage.setItem('portfolio-cfg', JSON.stringify({
+      pwHash:  config.pwHash,
+      ghToken: config.ghToken
+    }));
+  } catch {}
+  // Sauvegarder les données publiques sur GitHub
+  saveRemoteConfig();
 }
 
 function saveField(key, val) {
   config[key] = val;
-  saveConfig();
+  if (key === 'ghToken' || key === 'pwHash') {
+    // Données privées → localStorage uniquement
+    try {
+      localStorage.setItem('portfolio-cfg', JSON.stringify({
+        pwHash:  config.pwHash,
+        ghToken: config.ghToken
+      }));
+    } catch {}
+  } else {
+    saveConfig();
+  }
 }
+
+async function loadRemoteConfig() {
+  try {
+    const r = await fetch(
+      `https://raw.githubusercontent.com/${GH_USER}/${REPO_NAME}/main/portfolio-config.json`
+    );
+    if (r.ok) {
+      const data = await r.json();
+      config.hidden      = data.hidden      || {};
+      config.order       = data.order       || [];
+      config.customTags  = data.customTags  || {};
+      config.customNames = data.customNames || {};
+    }
+  } catch {}
+  // Récupère le SHA pour pouvoir mettre à jour le fichier ensuite
+  try {
+    const r = await fetch(
+      `${API}/repos/${GH_USER}/${REPO_NAME}/contents/portfolio-config.json`,
+      { headers: ghHeaders() }
+    );
+    if (r.ok) { const d = await r.json(); remoteConfigSha = d.sha; }
+  } catch {}
+}
+
+async function saveRemoteConfig() {
+  if (!config.ghToken) return; // Pas de token = lecture seule
+  const publicConfig = {
+    hidden:      config.hidden,
+    order:       config.order,
+    customTags:  config.customTags,
+    customNames: config.customNames
+  };
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(publicConfig, null, 2))));
+  const body = { message: 'Update portfolio config', content };
+  if (remoteConfigSha) body.sha = remoteConfigSha;
+  try {
+    const r = await fetch(
+      `${API}/repos/${GH_USER}/${REPO_NAME}/contents/portfolio-config.json`,
+      { method: 'PUT', headers: { ...ghHeaders(), 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
+    );
+    if (r.ok) { const d = await r.json(); remoteConfigSha = d.content.sha; }
+  } catch {}
+}
+
 
 /* ═══════════════════════════════════════════════════
    GITHUB API
@@ -1084,7 +1155,7 @@ document.addEventListener('keydown', e => {
    BOOT
    ═══════════════════════════════════════════════════ */
 loadConfig();
-fetchRepos();
+loadRemoteConfig().then(fetchRepos);
 </script>
 </body>
 </html>
