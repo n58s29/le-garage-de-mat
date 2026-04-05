@@ -3,7 +3,8 @@
 Historique de toutes les modifications du projet. Généré automatiquement à chaque commit.
 
 ## 2026-04-05
-- Add README and CHANGELOG (auto-generated) (`0604cfe`)
+- Refonte UX — Binary Obelisk design system (`2c27389`)
+- Add README and CHANGELOG (auto-generated) (`93e5bea`)
 - Delete projects.json (`71ec1fa`)
 - Delete admin.html (`f015fbb`)
 - Update index.html (`1e8b5ed`)
